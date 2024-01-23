@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  PoliticsTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: "politics"
+      AttributeDefinitions:
+        - AttributeName: "doctype"
+          AttributeType: "S"
+        - AttributeName: "date"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "doctype"
+          KeyType: "HASH"  # Partition key
+        - AttributeName: "date"
+          KeyType: "RANGE" # Sort key
+      BillingMode: PAY_PER_REQUEST
+    DependsOn:
+      - DynamoDBQueryPolicy
+
+  # DynamoDBQueryPolicy:
+  #   Type: "AWS::IAM::Policy"
+  #   Properties:
+  #     PolicyName: DynamoDBQueryPolicy
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: "Allow"
+  #           Action: "dynamodb:Query"
+  #           Resource: "*"
+  #     Roles:
+  #       - Ref: "OrdersTableQueryRole"
+
+  # OrdersTableQueryRole:
+  #   Type: "AWS::IAM::Role"
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: "Allow"
+  #           Principal:
+  #             Service:
+  #               - "dynamodb.amazonaws.com"
+  #           Action:
+  #             - "sts:AssumeRole"
+  #     Path: "/"

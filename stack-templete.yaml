@@ -1,0 +1,15 @@
+Resources:
+  LambdaStack1:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 'S3-URL-to-LambdaFunction1.yaml'
+
+  LambdaStack2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 'S3-URL-to-LambdaFunction2.yaml'
+
+  DynamoDBStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: 'S3-URL-to-DynamoDBTable.yaml'
