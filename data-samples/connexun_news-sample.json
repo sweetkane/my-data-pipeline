@@ -1,0 +1,881 @@
+{
+    "result": {
+        "response": "ok",
+        "newsCount": 30,
+        "skipped": 0
+    },
+    "news": [
+        {
+            "Title": "Usman: Wrong Narratives By Western Media About Africa Needs to Be Countered",
+            "Source": "thisdaylive.com",
+            "Url": "http://www.thisdaylive.com/index.php/2024/01/25/usman-wrong-narratives-by-western-media-about-africa-needs-to-be-countered",
+            "PublishedOn": "2024-01-25T01:49:32.232Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Abiodun-Usman-.jpg",
+            "SourceNationality": "ng",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.75
+            },
+            "Summary": "Executive Director of Sustainable Initiative for Nurturing Growth (SING) Nigeria and CEO of FOA Africa, Idris-Etanami Abiodun Usman in this interview, explains how African countries can challenge and change wrong narratives about the continent. We\u2019re coming to change the narrative in Africa.",
+            "Countries": [
+                "ke",
+                "ng",
+                "za"
+            ],
+            "Cities": [
+                "Lagos",
+                "Nairobi"
+            ],
+            "Categories": {
+                "label": "government policy",
+                "IPTCCode": "medtop:20000621"
+            }
+        },
+        {
+            "Title": "WFP: Palestinians in Gaza Face Acute Risk of Famine",
+            "Source": "thisdaylive.com",
+            "Url": "http://www.thisdaylive.com/index.php/2024/01/25/wfp-palestinians-in-gaza-face-acute-risk-of-famine",
+            "PublishedOn": "2024-01-25T01:49:32.152Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/0-711.jpg",
+            "SourceNationality": "ng",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.97
+            },
+            "Summary": "Russia on Wednesday accused Ukraine of shooting down a military transport plane that Moscow said was carrying 74 people, including 65 Ukrainian prisoners of war who were set to be swapped for Russians held by Kyiv. South Korea\u2019s military said Wednesday that North Korea fired several cruise missiles into the waters off its western coast.",
+            "Countries": [
+                "il",
+                "kp",
+                "ru",
+                "tr",
+                "ir",
+                "us",
+                "ua",
+                "ps",
+                "kr"
+            ],
+            "Cities": [
+                "York",
+                "Geneva",
+                "Moscow",
+                "York",
+                "New York",
+                "Moscow",
+                "Kyiv",
+                "Vladimir",
+                "Ankara",
+                "Belgorod",
+                "Moscow",
+                "Gaza",
+                "Khan Younis",
+                "Pyongyang"
+            ],
+            "Categories": {
+                "label": "famine",
+                "IPTCCode": "medtop:20000149"
+            }
+        },
+        {
+            "Title": "Amosun at 66: It\u2019s Life More Abundantly!",
+            "Source": "thisdaylive.com",
+            "Url": "http://www.thisdaylive.com/index.php/2024/01/25/amosun-at-66-its-life-more-abundantly",
+            "PublishedOn": "2024-01-25T01:49:32.077Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "https://global.ariseplay.com/amg/www.thisdaylive.com/uploads/Ibikunle-Amosun-.png",
+            "SourceNationality": "ng",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.99
+            },
+            "Summary": "This year would make it the 19th since Senator Amosun had been fasting everyday except on Sundays. A quick search reveals interesting 10 health benefits of fasting.",
+            "Countries": [],
+            "Cities": [],
+            "Categories": {
+                "label": "medical profession",
+                "IPTCCode": "medtop:20000485"
+            }
+        },
+        {
+            "Title": "Hailuogou, Ganzi Tibetan autonomous prefecture",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202105/14/WS609e4f54a31024ad0babdff6.html",
+            "PublishedOn": "2024-01-25T01:46:25.657Z",
+            "Description": "Located in southeastern Ganzi Tibetan autonomous prefecture, Sichuan province, Hailuogou Scenic Spot is on the eastern slope of Gongga Mountain.",
+            "Language": "en",
+            "Image": "https://govt.chinadaily.com.cn/images/202105/14/609e4288498e7a025739001b.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.66
+            },
+            "Summary": "Hailuogou Scenic Area is a tourism scenic spot of the lowest elevation in eastern Asia. Hailuogou Glacier, at 14.7 kilometers long, is the longest of the 71 glaciers on Gongga Mountain.",
+            "Countries": [],
+            "Cities": [],
+            "Categories": {
+                "label": "competition discipline",
+                "IPTCCode": "medtop:20000822"
+            }
+        },
+        {
+            "Title": "Tourists enjoy snow and ice activities in Xinjiang",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/19/WS65a9d8eca3105f21a507d35a.html",
+            "PublishedOn": "2024-01-25T01:46:25.616Z",
+            "Description": "Visitors recently immersed themselves in the winter wonderland of Hualin Park in Altay city, Xinjiang Uygur autonomous region.",
+            "Language": "en",
+            "Image": "https://www.chinaservicesinfo.com/images/202401/16/65a619c3498ed2d78b1461a5.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.73
+            },
+            "Summary": "chinadaily.com.cn\n\nchinaservicesinfo.com\n\nTourists enjoy snow and ice activities at Hualin Park in Altay city, Xinjiang Uygur autonomous region. [Photo/IC]\n\nVisitors recently immersed themselves in the winter wonderland of Hualin Park in Altay city, Xinjiang Uygur autonomous region.",
+            "Countries": [
+                "cn"
+            ],
+            "Cities": [
+                "Altay"
+            ],
+            "Categories": {
+                "label": "alpine skiing",
+                "IPTCCode": "medtop:20001057"
+            }
+        },
+        {
+            "Title": "Admire the snow-covered beauty of southern China",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202201/20/WS61e8ba1da310cdd39bc822e4.html",
+            "PublishedOn": "2024-01-25T01:46:25.545Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "http://govt.chinadaily.com.cn/images/202201/10/61dc35bd498e6a12d1160fe9.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.84
+            },
+            "Summary": "Known as \u201cthe top water town in China\u201d and the \u201cVenice of the Orient\u201d, Zhouzhuang town in East China\u2019s Jiangsu province is a popular tourist destination. Mount Huangshan in East China\u2019s Anhui province is one of the top 10 famous mountains in China, and a UNESCO world heritage site.",
+            "Countries": [
+                "cn"
+            ],
+            "Cities": [
+                "Huangshan",
+                "Zhujiajiao",
+                "Hangzhou",
+                "Shanghai",
+                "Yangzhou",
+                "Zhouzhuang",
+                "Zhangjiajie",
+                "Lijiang",
+                "Tianmen"
+            ],
+            "Categories": {
+                "label": "alpine skiing",
+                "IPTCCode": "medtop:20001057"
+            }
+        },
+        {
+            "Title": "Dabbagh double fires Pales-tine to historic Asian Cup win",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1b94da3105f21a507e3a5.html",
+            "PublishedOn": "2024-01-25T01:45:38.745Z",
+            "Description": "DOHA \u2014 Palestine's captain said his team had fulfilled \"a promise to the Palestinian people\" after reaching the Asian Cup knockout rounds for the first time on Tuesday.",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1b94da3105f211c862244.png",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.83
+            },
+            "Summary": "Share - WeChat CLOSE Palestine's Oday Dabbagh (center) celebrates with teammates after scoring in Palestine's historic Group C win over Hong Kong, China, at Abdullah Bin Khalifa Stadium in Doha, Qatar, on Tuesday. AP DOHA \u2014 Palestine's captain said his team had fulfilled \"a promise to the Palestinian people\" after reaching the Asian Cup knockout rounds for the first time on Tuesday.",
+            "Countries": [
+                "qa",
+                "cn",
+                "il",
+                "nl",
+                "hk",
+                "in",
+                "ps",
+                "ae"
+            ],
+            "Cities": [
+                "Doha",
+                "Gaza",
+                "Hong Kong"
+            ],
+            "Categories": {
+                "label": "volleyball",
+                "IPTCCode": "medtop:20001089"
+            }
+        },
+        {
+            "Title": "NBA stars shoot for Paris Olympics berth",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1b7f8a3105f21a507e39a.html",
+            "PublishedOn": "2024-01-25T01:45:38.508Z",
+            "Description": "There are few surprises in USA Basketball's men's player pool for the Paris Olympics, which was announced Tuesday, with most of the big names like LeBron James, Joel Embiid, Stephen Curry and Kevin Durant on the list.",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1b7f8a3105f211c862228.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.98
+            },
+            "Summary": "REUTERS There are few surprises in USA Basketball's men's player pool for the Paris Olympics, which was announced Tuesday, with most of the big names like LeBron James, Joel Embiid, Stephen Curry and Kevin Durant on the list. Draymond Green, who helped the US win gold at the 2016 Rio de Janeiro Games, and then another title at the rescheduled Tokyo Olympics in 2021, was not among the list of 41 candidates released by USA Basketball for the team that will head to Paris this summer in search of a fifth consecutive gold medal.",
+            "Countries": [
+                "fr",
+                "us"
+            ],
+            "Cities": [
+                "Holiday",
+                "Miami",
+                "Paris",
+                "Los Angeles",
+                "Brandon",
+                "Jackson",
+                "Gregg",
+                "Golden",
+                "Jackson",
+                "Phoenix",
+                "Desmond",
+                "San Antonio",
+                "Irving",
+                "Brandon",
+                "Duncan",
+                "Tyler",
+                "Austin",
+                "Phoenix",
+                "Allen",
+                "Austin",
+                "Austin",
+                "Walker",
+                "Philadelphia",
+                "Jackson",
+                "Paris",
+                "Xinhua"
+            ],
+            "Categories": {
+                "label": "basketball",
+                "IPTCCode": "medtop:20000851"
+            }
+        },
+        {
+            "Title": "Yemen's Houthis claim making 'direct hit' on US warship",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1accba3105f21a507e31f.html",
+            "PublishedOn": "2024-01-25T01:45:38.470Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1accba3105f211c862061.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.89
+            },
+            "Summary": "Share - WeChat CLOSE SANAA - Yemen's Houthi group said it hit an American warship on Wednesday in the Gulf of Aden and the Bab al-Mandab strait, according to a video statement from the group's spokesman. The Houthi missiles made a \"direct hit\" on an American warship and forced the two American commercial vessels to \"retreat from entering the Red Sea,\" Sarea added.",
+            "Countries": [
+                "sa",
+                "gb",
+                "us",
+                "ae",
+                "ps",
+                "ye"
+            ],
+            "Cities": [
+                "Aden"
+            ],
+            "Categories": {
+                "label": "maritime incident",
+                "IPTCCode": "medtop:20000164"
+            }
+        },
+        {
+            "Title": "Restructuring high on SOE agenda",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1b431a3105f21a507e351.html",
+            "PublishedOn": "2024-01-25T01:45:38.354Z",
+            "Description": "China will initiate restructuring and integration activities within its centrally administered State-owned enterprises this year, focusing on sectors such as information communication, new energy and equipment manufacturing, said the country's top State assets regulator on Wednesday.",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1b431a3105f211c862156.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.66
+            },
+            "Summary": "[Photo/Xinhua] China will initiate restructuring and integration activities within its centrally administered State-owned enterprises this year, focusing on sectors such as information communication, new energy and equipment manufacturing, said the country's top State assets regulator on Wednesday. Speaking at a news conference in Beijing, Li Bing, deputy secretary-general of the State-owned Assets Supervision and Administration Commission of the State Council, said that apart from better stimulating growth of strategic emerging industries, these moves will incentivize central SOEs to explore opportunities and cultivate new advantages.",
+            "Countries": [
+                "cn"
+            ],
+            "Cities": [
+                "Binzhou",
+                "Binzhou",
+                "Binzhou",
+                "Shanghai",
+                "Xinhua",
+                "Beijing"
+            ],
+            "Categories": {
+                "label": "oil and gas - upstream activities",
+                "IPTCCode": "medtop:20000267"
+            },
+            "Companies": [
+                "total",
+                "total"
+            ]
+        },
+        {
+            "Title": "Financial policy to focus on real economy",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1b712a3105f21a507e382.html",
+            "PublishedOn": "2024-01-25T01:45:38.285Z",
+            "Description": "China's financial regulatory policy will focus on supporting the real economy and further opening up the country's financial services industry, said Li Yunze, head of the National Financial Regulatory Administration, here on Wednesday.",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1b712a3105f211c8621ef.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.8
+            },
+            "Summary": "Share - WeChat CLOSE China's financial regulatory policy will focus on supporting the real economy and further opening up the country's financial services industry, said Li Yunze, head of the National Financial Regulatory Administration, here on Wednesday. \"Under the new situation, financial supply-side structural reform will be the main focus, enabling financial institutions to improve the adaptability of serving the real economy and stabilizing the national economy,\" Li said while delivering special remarks to the forum.",
+            "Countries": [
+                "hk",
+                "cn"
+            ],
+            "Cities": [
+                "Hong Kong",
+                "Shenzhen"
+            ],
+            "Categories": {
+                "label": "monetary policy",
+                "IPTCCode": "medtop:20000379"
+            }
+        },
+        {
+            "Title": "Experts: RRR cut plan to bolster biz vitality",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1b7cea3105f21a507e395.html",
+            "PublishedOn": "2024-01-25T01:45:37.751Z",
+            "Description": "China's stronger-than-expected plan to cut the reserve requirement ratio will boost market confidence and economic vitality, experts said on Wednesday, as it comes at a time when there is a stronger need for confidence in economic recovery.",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1b7cea3105f211c86221a.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.99
+            },
+            "Summary": "The nation will have more room to reduce lending rates and make better use of structural monetary policy tools, in order to steadily lower financing costs for the real economy, they added. Experts also said China will have more room to reduce lending rates and utilize structural policy tools this year.",
+            "Countries": [
+                "cn"
+            ],
+            "Cities": [
+                "Guanghua",
+                "Beijing"
+            ],
+            "Categories": {
+                "label": "central bank",
+                "IPTCCode": "medtop:20000350"
+            }
+        },
+        {
+            "Title": "Stabilization fund talk spurs investor sentiment",
+            "Source": "chinadaily.com.cn",
+            "Url": "http://www.chinadaily.com.cn/a/202401/25/WS65b1b5a2a3105f21a507e362.html",
+            "PublishedOn": "2024-01-25T01:45:37.696Z",
+            "Description": "Any market support measures, such as a stabilization fund, on which many investors are pinning hopes, would not only inject liquidity into currently struggling A shares, but also boost overall sentiment, which is crucial for the time being, said industry insiders and experts.",
+            "Language": "en",
+            "Image": "http://img2.chinadaily.com.cn/images/202401/25/65b1b5a2a3105f211c862187.jpeg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 1
+            },
+            "Summary": "[LU QIJIAN/FOR CHINA DAILY] Any market support measures, such as a stabilization fund, on which many investors are pinning hopes, would not only inject liquidity into currently struggling A shares, but also boost overall sentiment, which is crucial for the time being, said industry insiders and experts. The Bloomberg report came a day after Premier Li Qiang announced during a State Council executive meeting on Monday that the country will roll out more measures to stabilize its stock markets and introduce more long-term capital.",
+            "Countries": [
+                "hk",
+                "cn"
+            ],
+            "Cities": [
+                "Hong Kong",
+                "Fuyang",
+                "Shenzhen",
+                "Fuyang",
+                "Shanghai"
+            ],
+            "Categories": {
+                "label": "mutual funds",
+                "IPTCCode": "medtop:20000381"
+            }
+        },
+        {
+            "Title": "Downstreaming is losing ground for Indonesian development - Academia - The Jakarta Post",
+            "Source": "thejakartapost.com",
+            "Url": "http://www.thejakartapost.com/opinion/2024/01/25/downstreaming-is-losing-ground-for-indonesian-development.html",
+            "PublishedOn": "2024-01-25T01:44:44.919Z",
+            "Description": "Downstreaming is losing ground for Indonesian development - Academia - The Jakarta Post",
+            "Language": "en",
+            "Image": "https://img.jakpost.net/c/2024/01/24/2024_01_24_146656_1706094234._large.jpg",
+            "SourceNationality": "id",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.78
+            },
+            "Summary": "Amid the reshaping global economic landscape driven by geopolitics, advanced nations are resurrecting industrial policies in today's competitive and conflict-ridden arena, underpinned by a security-driven logic. A significant development involves an anti-subsidy investigation targeting Chinese automakers, aiming to restrict\u00a0inexpensive imports into the European market.",
+            "Countries": [
+                "sa",
+                "us",
+                "id",
+                "cn"
+            ],
+            "Cities": [
+                "Jakarta"
+            ],
+            "Categories": {
+                "label": "waste management industry",
+                "IPTCCode": "medtop:20000269"
+            }
+        },
+        {
+            "Title": "Government books worse than last year but better than forecast",
+            "Source": "nbr.co.nz",
+            "Url": "http://www.nbr.co.nz/economics/government-books-worse-than-last-year-but-better-than-forecast",
+            "PublishedOn": "2024-01-25T01:38:57.450Z",
+            "Description": "The National Business Review Online is New Zealand's authority in breaking business news and analysis.",
+            "Language": "en",
+            "Image": "https://d2xgqyuql1olth.cloudfront.net/assets/Uploads/story_imgs/100203_new_zealand_money.jpeg",
+            "SourceNationality": "nz",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 1
+            },
+            "Summary": "Government income was higher than expected in the first five months of the financial year. Labour\u2019s economic plan, goodbye ute charge, and a gloomy outlook\n\nCredit rating agency says New Zealand economy remains resilient\n\nLabour\u2019s economic plan, goodbye ute charge, and a gloomy outlook\n\nCredit rating agency says New Zealand economy remains resilient",
+            "Countries": [
+                "nz"
+            ],
+            "Cities": [],
+            "Categories": {
+                "label": "government debt",
+                "IPTCCode": "medtop:20000368"
+            }
+        },
+        {
+            "Title": "Zverev thwarts Alcaraz escape bid to make semis",
+            "Source": "china.org.cn",
+            "Url": "http://www.china.org.cn/sports/2024-01/25/content_116963476.htm",
+            "PublishedOn": "2024-01-25T01:36:47.975Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "http://images.china.cn/site1007/2024-01/25/116963476_d3c1efeb-b7b9-401c-ad30-81bfa6eafbb5.jpg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.88
+            },
+            "Summary": "\u4e0b\u8f7d\u5b89\u88c5Flash\u64ad\u653e\u5668 Second seed Carlos Alcaraz crashed out of the quarterfinals at the Australian Open on Wednesday after his desperate comeback attempt was thwarted by ruthless German Alexander Zverev. It was the first time Zverev has beaten a top-five player at a Grand Slam as he seeks a maiden Major title.",
+            "Countries": [
+                "es",
+                "cn",
+                "au",
+                "us",
+                "de"
+            ],
+            "Cities": [
+                "Melbourne",
+                "Xinhua",
+                "Melbourne"
+            ],
+            "Categories": {
+                "label": "tennis",
+                "IPTCCode": "medtop:20001085"
+            }
+        },
+        {
+            "Title": "CBA: Liaoning bag 6th straight win, top Shenzhen in OT",
+            "Source": "china.org.cn",
+            "Url": "http://www.china.org.cn/sports/2024-01/25/content_116963492.htm",
+            "PublishedOn": "2024-01-25T01:36:47.684Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "http://encomments.china.org.cn/comments/jcaptcha",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.88
+            },
+            "Summary": "\u4e0b\u8f7d\u5b89\u88c5Flash\u64ad\u653e\u5668 CBA defending champions the Liaoning Flying Leopards extended their winning streak to six games after taking down the Shenzhen Aviators 123-119 during overtime on Wednesday. Liaoning who had lost three out of the four games before the winning streak, got their second straight win on the road.",
+            "Countries": [
+                "cn"
+            ],
+            "Cities": [
+                "Shenzhen",
+                "Ningbo",
+                "Nanjing",
+                "Shanghai",
+                "Xining",
+                "Beijing",
+                "Tianjin"
+            ],
+            "Categories": {
+                "label": "competition discipline",
+                "IPTCCode": "medtop:20000822"
+            }
+        },
+        {
+            "Title": "China dominate short track speed skating, add free ski silver at Gangwon 2024",
+            "Source": "china.org.cn",
+            "Url": "http://www.china.org.cn/sports/2024-01/25/content_116963501.htm",
+            "PublishedOn": "2024-01-25T01:36:47.663Z",
+            "Description": "",
+            "Language": "en",
+            "Image": "http://images.china.cn/site1007/2024-01/25/116963501_bd7b4333-f9e9-4aca-92c8-a2291af313d5.jpg",
+            "SourceNationality": "cn",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.95
+            },
+            "Summary": "\u4e0b\u8f7d\u5b89\u88c5Flash\u64ad\u653e\u5668 China dominated short track speed skating with another mixed relay gold medal, and added a freestyle skiing silver at the 2024 Gangwon Winter Youth Olympic Games on Wednesday. (Xinhua/Xu Yanan) Li Jinzi, Yang Jingru, Zhang Bohao and Zhang Xinzhe comfortably finished first in the mixed-gender team relay final that wrapped up the short track speed skating competition.",
+            "Countries": [
+                "nz",
+                "it",
+                "cn",
+                "fr",
+                "nl",
+                "at",
+                "us",
+                "cz",
+                "se",
+                "kr"
+            ],
+            "Cities": [
+                "Gangneung",
+                "Muriel",
+                "Xinhua"
+            ],
+            "Categories": {
+                "label": "short track speed skating",
+                "IPTCCode": "medtop:20001151"
+            }
+        },
+        {
+            "Title": "Alex Baldwin demands his 'Rust' trial for manslaughter of Halyna Hutchins begins 'sooner rather than later' to 'minimize public vilification'",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/news/article-13003801/Alex-Baldwin-Rust-trial-manslaughter-Halyna-Hutchins-speedy-trail.html",
+            "PublishedOn": "2024-01-25T01:35:20.000Z",
+            "Description": "Alec Baldwin has filed a petition to have his manslaughter trial 'sooner rather than later' in an attempt to 'minimize public vilification'.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/01/80438653-0-image-m-23_1706146495859.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.9
+            },
+            "Summary": "Court documents first obtained by TMZ showed he has until February 1 to officially plea in the charges. He has consistently denied any responsibility in the shooting.",
+            "Countries": [
+                "mx"
+            ],
+            "Cities": [
+                "Mexico"
+            ],
+            "Categories": {
+                "label": "prosecution and prosecutors",
+                "IPTCCode": "medtop:20000118"
+            }
+        },
+        {
+            "Title": "Anthony Albanese reveals his single reason for breaking his election promise on Stage Three tax cuts",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/news/article-13003787/Anthony-Albanese-reveals-single-reason-breaking-election-promise-Stage-Three-tax-cuts.html",
+            "PublishedOn": "2024-01-25T01:31:02.000Z",
+            "Description": "Anthony Albanese has defended breaking a major election promise by overhauling the stage three tax cuts.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/01/80438535-0-image-a-10_1706145888006.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.61
+            },
+            "Summary": "Anthony Albanese has defended breaking a major election promise by overhauling the stage three tax cuts, arguing changed economic conditions forced his hand as he seeks to win back Middle Australia. The Prime Minister addressed the National Press Club on Thursday to unveil his plan to slash the tax cuts for higher income earners in favour of bigger breaks for those earning under $150,000.",
+            "Countries": [
+                "au"
+            ],
+            "Cities": [],
+            "Categories": {
+                "label": "referenda",
+                "IPTCCode": "medtop:20000584"
+            }
+        },
+        {
+            "Title": "Suns - Mavericks live online: stats, scores and highlights",
+            "Source": "en.as.com",
+            "Url": "https://en.as.com/nba/suns-mavericks-live-online-stats-scores-and-highlights-nba-n/",
+            "PublishedOn": "2024-01-25T01:30:52.681Z",
+            "Description": "The Phoenix Suns are one of the hottest teams in the league, and tonight they take their six game winning streak to Dallas to take on the sliding Mavericks.",
+            "Language": "en",
+            "Image": "https://img.asmedia.epimg.net/resizer/Iulhi4aAQLEiYRfKxsQeu4qtfeg=/1472x828/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/6KAD4J7AC5PG7T46OMSSRCMEVI.jpg",
+            "SourceNationality": "es",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.58
+            },
+            "Summary": "The Mavs are coming off a Monday night matchup with the top team in the league, the Boston Celtics. The Mavericks to a slight lead in the first quarter, but Boston went ahead early in the second and never looked back.",
+            "Countries": [
+                "us"
+            ],
+            "Cities": [
+                "Milwaukee",
+                "Dallas",
+                "Boston",
+                "Milwaukee"
+            ],
+            "Categories": {
+                "label": "basketball",
+                "IPTCCode": "medtop:20000851"
+            }
+        },
+        {
+            "Title": "Makeup-free Suki Waterhouse covers baby bump under black trench coat after getting her hair done in LA... as her due date approaches",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/tvshowbiz/article-13003675/Suki-Waterhouse-covers-baby-bump-LA.html",
+            "PublishedOn": "2024-01-25T01:30:50.000Z",
+            "Description": "Suki layered her outerwear over a pair of wide-legged yellow trousers, a black top and lace-up sneakers.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/00/80436769-0-image-m-32_1706142803531.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.49
+            },
+            "Summary": "Suki and Robert have been spotted in and around Los Angeles this month, with the Daisy Jones And The Six star attending the 2024 Emmy Awards last weekend. Just days before the engagement news was confirmed, Suki was seen wearing a two-diamond ring on her left ring finger.",
+            "Countries": [],
+            "Cities": [],
+            "Categories": {
+                "label": "stand up paddleboarding (SUP)",
+                "IPTCCode": "medtop:20001307"
+            },
+            "Companies": [
+                "amazon"
+            ]
+        },
+        {
+            "Title": "Denise Van Outen and Johnny Vaughan REUNITE as the former Big Breakfast hosts tease future plans together",
+            "Source": "dailymail.co.uk",
+            "Url": "https://www.dailymail.co.uk/tvshowbiz/article-13003727/Denise-Van-Outen-Johnny-Vaughan-REUNITE-Big-Breakfast-future-plans.html",
+            "PublishedOn": "2024-01-25T01:30:15.000Z",
+            "Description": "The presenter has reunited with her TV partner Johnny Vaughan as the two posed together in a recent Instagram snap on Wednesday.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/01/80437851-0-image-m-150_1706145280129.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.7
+            },
+            "Summary": "Denise also shared a clip from a First Dates skit the pair did during their time guest presenting Steph's Packed Lunch last summer.",
+            "Countries": [],
+            "Cities": [],
+            "Categories": {
+                "label": "sport",
+                "IPTCCode": "medtop:15000000"
+            }
+        },
+        {
+            "Title": "Alabama can execute prisoner using nitrogen gas rules federal court - after inmate's appeal that it was untested and could lead to a cruel death was rejected: Final decision on method of execution res",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/news/article-13003773/federal-court-rules-nitrogen-hypoxia-execution-Kenneth-Eugene-Smith.html",
+            "PublishedOn": "2024-01-25T01:29:24.000Z",
+            "Description": "Alabama will be allowed to put Kenneth Eugene Smith to death with nitrogen gas, a federal court ruled. The ruling refuses to block what would be the first execution by new method since 1982.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/01/80438575-0-image-m-32_1706146154395.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.55
+            },
+            "Summary": "Now, it appears they will likely hear and rule on whether Alabama can use the new method of execution before Smith is set to be put to death. Three states - Alabama, Mississippi and Oklahoma - have authorized nitrogen hypoxia as an execution method, but no state has attempted to use it so far.",
+            "Countries": [
+                "us"
+            ],
+            "Cities": [
+                "York",
+                "Marshall",
+                "Elizabeth",
+                "Eugene",
+                "Parker",
+                "Marshall",
+                "York",
+                "New York",
+                "Oklahoma",
+                "Eugene",
+                "Marshall",
+                "Elizabeth",
+                "York"
+            ],
+            "Categories": {
+                "label": "capital punishment",
+                "IPTCCode": "medtop:20000135"
+            }
+        },
+        {
+            "Title": "| Bharat Ratna for Karpoori well-deserving recognition",
+            "Source": "asianage.com",
+            "Url": "http://www.asianage.com/opinion/edit/240124/aa-edit-bharat-ratna-for-karpoori-well-deserving-recognition.html",
+            "PublishedOn": "2024-01-25T01:24:31.025Z",
+            "Description": "His ideological, political and social impact is best gauged by the sheer number of politicians he inspired",
+            "Language": "en",
+            "Image": "https://s3.ap-southeast-1.amazonaws.com/images.asianage.com/images/aa-Cover-03k6vara2725h09qqavqkprmt7-20240124203427.jpeg",
+            "SourceNationality": "in",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.99
+            },
+            "Summary": "Former Bihar chief minister and socialist leader Karpoori Thakur, popularly known as 'jannayak', will be awarded the 'Bharat Ratna' posthumously. (File Image: PTI) The decision of the Central government to confer the Bharat Ratna on Karpoori Thakur, a prominent Gandhian socialist leader from Bihar, should be welcomed by every citizen.",
+            "Countries": [
+                "in"
+            ],
+            "Cities": [
+                "Bihar",
+                "Mandal"
+            ],
+            "Categories": {
+                "label": "religion and belief",
+                "IPTCCode": "medtop:12000000"
+            }
+        },
+        {
+            "Title": "| Rahul yatra finally gets attention",
+            "Source": "asianage.com",
+            "Url": "http://www.asianage.com/opinion/edit/240124/aa-edit-rahul-yatra-finally-gets-attention.html",
+            "PublishedOn": "2024-01-25T01:24:30.688Z",
+            "Description": "How politicised all events become in a deeply polarised nation",
+            "Language": "en",
+            "Image": "https://s3.ap-southeast-1.amazonaws.com/images.asianage.com/images/aa-Cover-03k6vara2725h09qqavqkprmt7-20240124204746.jpeg",
+            "SourceNationality": "in",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.79
+            },
+            "Summary": "Published\u00a0: Jan 25, 2024, 12:00 am IST Updated\u00a0: Jan 25, 2024, 12:00 am IST How politicised all events become in a deeply polarised nation Congress leader Rahul Gandhi during the 'Bharat Jodo Nyay Yatra', in Bongaigaon district, Assam, on Wednesday. (Image: PTI) Like the sequel of a hit movie struggling to match its success, Congress scion Rahul Gandhi-led Bharat Jodo Nyay Yatra was progressing without capturing much public attention when it had life breathed into it during its tortuous passage through Assam.",
+            "Countries": [
+                "in"
+            ],
+            "Cities": [
+                "Guwahati",
+                "Bongaigaon",
+                "Kanyakumari"
+            ],
+            "Categories": {
+                "label": "political leadership",
+                "IPTCCode": "medtop:20001312"
+            }
+        },
+        {
+            "Title": "Alabama-Auburn Basketball Game Delayed By Light Malfunction, Tide Fans Chant \u2018F*ck You Auburn\u2019",
+            "Source": "foxnews.com",
+            "Url": "https://www.outkick.com/alabama-auburn-basketball-game-delayed-by-light-malfunction/",
+            "PublishedOn": "2024-01-25T01:24:24.000Z",
+            "Description": "The lights went out prior to the Alabama-Auburn basketball game and fans found an interesting way to keep themselves entertained.",
+            "Language": "en",
+            "Image": "https://www.outkick.com/wp-content/uploads/Screenshot-2024-01-24-at-8.05.14-PM-scaled.jpg",
+            "SourceNationality": "us",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.78
+            },
+            "Summary": "Start of Alabama-Auburn being played in the dark after lights went out for pregame introductions and haven\u2019t turned back on. Alabama students chant f-u Auburn as the arena crew tries to get the lights to work.",
+            "Countries": [
+                "us"
+            ],
+            "Cities": [
+                "Pearl",
+                "Auburn",
+                "Casagrande",
+                "Auburn",
+                "Auburn",
+                "Tuscaloosa",
+                "Auburn"
+            ],
+            "Categories": {
+                "label": "American football",
+                "IPTCCode": "medtop:20000823"
+            }
+        },
+        {
+            "Title": "Harry Potter author J K Rowling sparks neighbours' fury after hedge-trimming works 'close entire street and make children late for school'",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/news/article-13003573/Harry-Potter-J-K-Rowling-neighbours-hedge.html",
+            "PublishedOn": "2024-01-25T01:22:19.000Z",
+            "Description": "JK Rowling has earned the ire of neighbours after gardening works to her Edinburgh home led to a road closure - causing some children to be late for school, their parents claim.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/01/80436907-0-image-m-91_1706145643225.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "negative",
+                "score": -0.99
+            },
+            "Summary": "The trimming, which occurs roughly every three years, has led to temporary four-way traffic lights outside the author's house in an affluent suburb of the city, The Times reports. The following year, Rowling was given permission to to build two luxury tree houses in the garden of her home despite protests from local residents.",
+            "Countries": [],
+            "Cities": [
+                "Edinburgh"
+            ],
+            "Categories": {
+                "label": "competition discipline",
+                "IPTCCode": "medtop:20000822"
+            }
+        },
+        {
+            "Title": "Pauly Shore urges Richard Simmons to keep an 'open heart' about biopic after Sundance screening gets standing ovation despite fitness guru disavowing film: 'We're going to try to move forward'",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/tvshowbiz/article-13003653/Pauly-Shore-urges-Richard-Simmons-open-heart-biopic.html",
+            "PublishedOn": "2024-01-25T01:12:40.000Z",
+            "Description": "The 55-year-old comedian fantasized about he and the retired aerobics guru having matching director's chairs with 'Richard' emblazoned on the back",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/01/80437019-0-image-m-40_1706145123962.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.99
+            },
+            "Summary": "Simmons did, in fact, make six appearances on the Ellen Show between 2003 and 2011 where he showcased his flamboyant, effervescent personality and sincere desire to get real about the darker days when he topped the scales at 268lbs.",
+            "Countries": [
+                "ca",
+                "cn"
+            ],
+            "Cities": [
+                "Milton"
+            ],
+            "Categories": {
+                "label": "competition discipline",
+                "IPTCCode": "medtop:20000822"
+            }
+        },
+        {
+            "Title": "Jurgen Klopp hails Liverpool's 'perfect' Carabao Cup journey and relishes final showdown against Chelsea... but warns the Blues will be out for revenge after losing at Wembley in 2022",
+            "Source": "dailymail.co.uk",
+            "Url": "http://www.dailymail.co.uk/sport/football/article-13003753/Jurgen-Klopp-Liverpool-Carabao-Cup-Wembley-Chelsea.html",
+            "PublishedOn": "2024-01-25T01:04:57.000Z",
+            "Description": "LEWIS STEELE AT CRAVEN COTTAGE: Liverpool\u00a0face another Wembley showdown with Chelsea next month after Jurgen Klopp's men weathered a late storm to see off Fulham.",
+            "Language": "en",
+            "Image": "https://i.dailymail.co.uk/1s/2024/01/25/00/80437815-0-image-m-37_1706144263843.jpg",
+            "SourceNationality": "gb",
+            "TitleSentiment": {
+                "sentiment": "positive",
+                "score": 0.99
+            },
+            "Summary": "Liverpool face another Wembley showdown with Chelsea next month after Jurgen Klopp\u2019s men weathered a late storm at Craven Cottage to see off Fulham and book a spot in the Carabao Cup final. He's just a really good player.",
+            "Countries": [
+                "de"
+            ],
+            "Cities": [
+                "Chelsea",
+                "Liverpool"
+            ],
+            "Categories": {
+                "label": "competition discipline",
+                "IPTCCode": "medtop:20000822"
+            }
+        }
+    ]
+}

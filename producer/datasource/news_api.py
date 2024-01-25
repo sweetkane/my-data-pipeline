@@ -1,26 +1,30 @@
 from datetime import date, datetime
-from datasource.datasource import IDatasource
+from datasource._datasource import INewsDatasource
 from newsapi import NewsApiClient
 import os
 
 
 
-class NewsAPI(IDatasource):
+class NewsAPI(INewsDatasource):
     def __init__(self) -> None:
+        self.date_key = "publishedAt"
+        self.date_format = "%Y-%m-%dT%H:%M:%SZ"
         news_api_key = os.environ.get('NEWS_API_KEY')
         self.api_client = NewsApiClient(news_api_key)
 
-
-    def get_since(self, since_date: date) -> dict:
+    def _get_articles(self) -> list:
         res = self.api_client.get_top_headlines()
         articles = res['articles']
-        to_remove = []
-        for i in range(len(articles)):
-            article_date = articles[i]["publishedAt"]
-            article_date = datetime.strptime(article_date, "%Y-%m-%dT%H:%M:%SZ")
-            if article_date.date() < since_date:
-                to_remove.append(i)
-        for i in reversed(to_remove):
-            articles = articles[:i] + articles[i+1:]
-        return {'data': articles}
+        return articles
 
+    def _extract_headline(self, raw: dict) -> str:
+        return raw["title"]
+
+    def _extract_content(self, raw: dict) -> str:
+        return f"Description: {raw['description']}\n\nContent: {raw['content']}"
+
+    def _extract_image_link(self, raw: dict) -> str:
+        return raw["urlToImage"]
+
+    def _extract_reference_links(self, raw: dict) -> [str]:
+        return raw["url"]

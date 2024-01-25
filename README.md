@@ -14,13 +14,20 @@ consumers: \[lambda]
 - send output to twitter api
 
 
-#### deployment:
-lambda:
-- containerize
-- push to ECR
-- deploy image with cloudformation
-- https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-function.html
+I might be able to use cloudformation as part of a pipeline that comes after my scripted lambda deployment.
+Potentially I just script the part where I deploy the container to ECR, then after that I create the stack
+
+deployment-pipeline.sh
+``` bash
+cd producer
+./deploy-lambda.sh producer-lambda
+cd ../consumer
+./deploy-lambda.sh consumer-lambda
+cd ..
+aws cloudformation create-stack \
+    --stack-name twitterbot
+    --template-body file://stack-template.yaml
+```
 
 
-s3:
-- need an s3 bucket for my templates
+curl https://en.wikipedia.org/wiki/Portal:Current_events > temp.html
