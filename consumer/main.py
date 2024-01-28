@@ -1,18 +1,24 @@
-from kafka import KafkaConsumer
 import sys
+from datetime import date, timedelta
+from clients._client import IClient
+from clients.email_client import EmailClient
 
-server = ""
-topics = ["news_api"]
+clients: dict[str, type[IClient]] = {
+    "email": EmailClient
+}
 
 def main() -> int:
-    if (len(sys.argv) != 1):
-        print(f"Usage: {sys.argv[0]}")
+    if (len(sys.argv) != 2 or sys.argv[1] not in clients.keys()):
+        print(f"Usage: {sys.argv[0]} <client>")
+        print("Clients:")
+        [print(f"- {option}") for option in clients.keys()]
         return 1
 
-    consumer = KafkaConsumer(topics=topics, bootstrap_servers=[server])
+    key = sys.argv[1]
 
-    for msg in consumer:
-        print(msg)
+    client = clients[key](date.today()-timedelta(days=1))
+    client.post()
+
 
 if __name__ == '__main__':
     sys.exit(main())
