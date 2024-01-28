@@ -15,5 +15,5 @@ class IClient:
     def _synthesize(self, data: dict) -> dict:
         pass
 
-    def _send(self, payload: dict):
+    def _send(self, data: dict):
         pass

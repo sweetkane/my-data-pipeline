@@ -7,6 +7,8 @@ clients: dict[str, type[IClient]] = {
     "email": EmailClient
 }
 
+
+
 def main() -> int:
     if (len(sys.argv) != 2 or sys.argv[1] not in clients.keys()):
         print(f"Usage: {sys.argv[0]} <client>")

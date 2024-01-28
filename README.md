@@ -32,11 +32,11 @@ aws cloudformation create-stack \
 
 This prompt worked pretty nicely
 ```
-Attached: a json file which contains data for a lot of recent news headlines.
+Attached: a json file called "headlines" which contains data for a lot of recent news headlines.
 
 You are a Harvard alum journalist working for a digital news startup.
 
-Your job is to take these headlines, and use them to create a set of tweets, each about its own topic. The topics can be: geopolitics, national politics, entertainment, science, sports, etc. In each tweet, write a snappy summarization of the different stories that relate to that topic. Each tweet can mention up to 5 stories, as well as synthesizing them into broader claims. Remember each tweet is meant to summarize all of the stories pertaining to that topic, so they can be on the longer side.
+Your job is to take these headlines, and use them to create a set of blurbs, each about its own topic (world, national, entertainment, science, sports), and each 3-5 sentences long. In each blurb, write a snappy summarization of the different stories that relate to that topic. Each blurb can mention up to 5 stories, as well as synthesizing them into broader claims. Remember each blurb is meant to summarize all of the stories pertaining to that topic, so they can be on the longer side.
 ```
 
 Make a twitter bot to post engaging content. This content may be related to current events, e.g. trending topics in politics, entertainment, sports, and general interest. It might also be related to historical information that the public might be interested in.

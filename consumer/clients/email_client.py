@@ -1,6 +1,8 @@
 from datetime import date, timedelta
 import boto3
 from botocore.exceptions import ClientError
+from email_synthesizer import EmailSynthesizer
+from _client import IClient
 import os
 
 class EmailClient(IClient):
@@ -13,33 +15,31 @@ class EmailClient(IClient):
         pass
 
     def _synthesize(self, data: dict) -> dict:
-        pass
+        synthesizer = EmailSynthesizer()
+        categorized = synthesizer.categorize(data)
+        synthesized = synthesizer.synthesize(categorized)
+        return synthesized
 
-    def _send(self, payload: dict):
+    def _send(self, data: dict):
         self._send_email(
             sender=os.environ["MY_EMAIL_ADDRESS"],
             recipient=os.environ["MY_EMAIL_ADDRESS"],
             subject=self.subject,
-            body_html=self._to_html(payload),
+            body_html=self._to_html(data),
             aws_region=os.environ["AWS_DEFAULT_REGION"]
         )
 
-    def _to_html(self, payload):
-        return f"""
+    def _to_html(self, data: dict):
+        html = f"""
         <html>
         <head></head>
         <body>
         <h1>Good Morning! Todays News:</h1>
-        <h2>World</h2>
-        <p>{payload["world"]}</p>
-        <h2>National Politics</h2>
-        <p>{payload["national"]}</p>
-        <h2>Entertainment</h2>
-        <p>{payload["entertainment"]}</p>
-        <h2>Science</h2>
-        <p>{payload["science"]}</p>
-        <h2>Sports</h2>
-        <p>{payload["sports"]}</p>
+        """
+        for key in data.keys():
+            html += f"<h2>{key.value}</h2>\n"
+            html += f"<p>{data[key]}</p>\n"
+        html += """
         <div></div>
         <p>Have a good day!</p>
         </body>
