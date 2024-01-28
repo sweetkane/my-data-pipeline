@@ -1,10 +1,12 @@
 import requests
+from datetime import date, timedelta
 from datasource._datasource import INewsDatasource
 import os
 
 
 class NewsNow(INewsDatasource):
-    def __init__(self) -> None:
+    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
+        super.__init__(since_date)
         self.date_key = "date"
         self.date_format = "%Y-%m-%dT%H:%M:%S%z"
         self.url = "https://newsnow.p.rapidapi.com/"

@@ -1,8 +1,20 @@
 from datetime import date, datetime, timedelta
 
-class INewsDatasource:
-    def get_since(self, since_date: date = date.today()-timedelta(days=1)) -> dict:
+
+class IDatasource:
+    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
+        pass
+
+    def get(self) -> dict:
+        pass
+
+class INewsDatasource(IDatasource):
+
+    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
         self.since_date = since_date
+
+    def get(self) -> dict:
+
         articles = self._get_articles()
         articles = self._filter_date(articles)
         res = []

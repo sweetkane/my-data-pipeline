@@ -1,11 +1,11 @@
 from datetime import date, timedelta
-from datasource._datasource import INewsDatasource
+from datasource._datasource import IDatasource
 from datasource.news_api import NewsAPI
 from datasource.connexun_news import ConnexunNews
 from datasource.news_now import NewsNow
 import sys
 
-datasources: dict[str, type(INewsDatasource)] = {
+datasources: dict[str, type[IDatasource]] = {
     "news_api": NewsAPI,
     "connexun_news": ConnexunNews,
     "news_now": NewsNow
@@ -20,8 +20,8 @@ def main() -> int:
 
     key = sys.argv[1]
 
-    datasource = datasources[key]()
-    arts = datasource.get_since(date.today()-timedelta(days=1))
+    datasource = datasources[key](date.today()-timedelta(days=1))
+    arts = datasource.get()
 
     import json
 
