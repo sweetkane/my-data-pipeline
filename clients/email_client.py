@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 import boto3
 from botocore.exceptions import ClientError
-from consumer.clients.synthesizers.email_synthesizer import EmailSynthesizer
+from clients.synthesizers.email_synthesizer import EmailSynthesizer
 from _client import IClient
 import os
 

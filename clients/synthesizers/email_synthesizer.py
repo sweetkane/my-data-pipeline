@@ -1,4 +1,3 @@
-from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.output_parsers.enum import EnumOutputParser
@@ -7,13 +6,12 @@ from enum import Enum
 import json
 
 class Topic(Enum):
-    WORLD = "world news"
-    NATIONAL = "national news"
-    ENTERTAINMENT = "entertainment news"
-    SCIENCE = "science news"
-    TECH = "technology news"
-    FINANCE = "finance news"
-    SPORTS = "sports news"
+    WORLD = "World"
+    NATIONAL = "National Politics"
+    ENTERTAINMENT = "Entertainment"
+    SCIENCE_AND_TECH = "Science & Technology"
+    FINANCE = "Finance"
+    SPORTS = "Sports"
 
 
 class EmailSynthesizer:
@@ -25,25 +23,28 @@ class EmailSynthesizer:
 
         parser = EnumOutputParser(enum=Topic)
         for headline in data:
-            prompt = PromptTemplate(
-                template="""
-                Categorize the topic of the news headline:
+            try:
+                prompt = PromptTemplate(
+                    template="""
+                    Categorize the topic of the news headline:
 
-                {headline}
+                    {headline}
 
-                ONLY USE ONE OF THE PREOVIDED TOPIC CATEGORIES!
-                DO NOT CREATE A NEW CATEGORY!
+                    ONLY USE ONE OF THE PREOVIDED TOPIC CATEGORIES!
+                    DO NOT CREATE A NEW CATEGORY!
 
-                Instructions: {instructions}
-                """,
-                input_variables=["headline"],
-                partial_variables={
-                    "instructions": parser.get_format_instructions()
-                }
-            )
-            chain = prompt | ChatOpenAI() | parser
-            topic = chain.invoke({"headline": json.dumps(headline)})
-            sorted_headlines[topic].append(headline)
+                    Instructions: {instructions}
+                    """,
+                    input_variables=["headline"],
+                    partial_variables={
+                        "instructions": parser.get_format_instructions()
+                    }
+                )
+                chain = prompt | ChatOpenAI() | parser
+                topic = chain.invoke({"headline": json.dumps(headline)})
+                sorted_headlines[topic].append(headline)
+            except:
+                continue
         return sorted_headlines
 
     def synthesize(data: dict) -> dict:

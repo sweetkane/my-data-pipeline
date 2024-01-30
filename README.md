@@ -30,13 +30,17 @@ aws cloudformation create-stack \
 ```
 
 
-This prompt worked pretty nicely
-```
-Attached: a json file called "headlines" which contains data for a lot of recent news headlines.
+./deploy-lambda.sh my-data-pipeline
+aws lambda invoke \
+    --function-name my-data-pipeline \
+    --payload '{"datasources": ["connexun_news", "news_now"], "clients": ["email"]}'
 
-You are a Harvard alum journalist working for a digital news startup.
+aws lambda invoke \
+    --function-name my-data-pipeline \
+    --cli-binary-format raw-in-base64-out \
+    --payload '{"datasources": ["connexun_news", "news_now"], "clients": ["email"]}' \
+    res.txt
 
-Your job is to take these headlines, and use them to create a set of blurbs, each about its own topic (world, national, entertainment, science, sports), and each 3-5 sentences long. In each blurb, write a snappy summarization of the different stories that relate to that topic. Each blurb can mention up to 5 stories, as well as synthesizing them into broader claims. Remember each blurb is meant to summarize all of the stories pertaining to that topic, so they can be on the longer side.
-```
 
-Make a twitter bot to post engaging content. This content may be related to current events, e.g. trending topics in politics, entertainment, sports, and general interest. It might also be related to historical information that the public might be interested in.
+https://docs.aws.amazon.com/lambda/latest/dg/python-image.html#python-image-instructions
+https://docs.aws.amazon.com/cli/latest/reference/lambda/invoke.html#examples

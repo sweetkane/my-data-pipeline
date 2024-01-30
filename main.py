@@ -20,27 +20,19 @@ clients: dict[str, type[IClient]] = {
     "email": EmailClient
 }
 
-def main() -> int:
-    if (len(sys.argv) != 2 or sys.argv[1] not in datasources.keys()):
-        print(f"Usage: {sys.argv[0]} <datasource>")
-        print("Datasources:")
-        [print(f"- {option}") for option in datasources.keys()]
-        return 1
+def handler(event, context):
+    datasource_keys = event["datasources"]
+    client_keys = event["clients"]
 
-    key = sys.argv[1]
+    data = []
+    for key in datasource_keys:
+        datasource = datasources[key](date.today()-timedelta(days=1))
+        data += datasource.get()
 
-    datasource = datasources[key](date.today()-timedelta(days=1))
-    arts = datasource.get()
+    for key in client_keys:
+        client = clients[key]()
+        client.post(data)
 
-    clientskey = "email"
-
-    client = clients[clientskey]()
-    client.post(arts)
-
-    import json
-
-    with open('res.json', 'a') as fp:
-            json.dump(arts, fp)
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(handler())
