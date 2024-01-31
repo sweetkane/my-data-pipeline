@@ -3,8 +3,6 @@ from datasource._datasource import IDatasource
 from datasource.news_api import NewsAPI
 from datasource.connexun_news import ConnexunNews
 from datasource.news_now import NewsNow
-import sys
-import sys
 from datetime import date, timedelta
 from clients._client import IClient
 from clients.email_client import EmailClient
@@ -33,6 +31,18 @@ def handler(event, context):
         client = clients[key]()
         client.post(data)
 
+    return {
+        "data_len": len(data)
+    }
 
-if __name__ == '__main__':
-    sys.exit(handler())
+
+# if __name__ == '__main__':
+#     sys.exit(
+#         handler(
+#             {
+#                 "datasources": ["connexun_news", "news_now"],
+#                 "clients": ["email"]
+#             },
+#             {}
+#         )
+#     )

@@ -6,7 +6,7 @@ import os
 
 class ConnexunNews(INewsDatasource):
     def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
-        super.__init__(since_date)
+        super().__init__(since_date)
         self.date_key = "PublishedOn"
         self.date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
         self.url = "https://news67.p.rapidapi.com/v2/feed"

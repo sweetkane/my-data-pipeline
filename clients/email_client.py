@@ -2,12 +2,12 @@ from datetime import date, timedelta
 import boto3
 from botocore.exceptions import ClientError
 from clients.synthesizers.email_synthesizer import EmailSynthesizer
-from _client import IClient
+from clients._client import IClient
 import os
 
 class EmailClient(IClient):
     def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
-        super.__init__(since_date)
+        super().__init__(since_date)
         self.subject = f"Daily Newsletter: {date.today().strftime('%A, %B %-d %Y')}"
 
     def _gather_data(self) -> dict:
@@ -37,7 +37,10 @@ class EmailClient(IClient):
         <h1>Good Morning! Todays News:</h1>
         """
         for key in data.keys():
-            html += f"<h2>{key.value}</h2>\n"
+            print(key)
+            print(data[key])
+            print("======")
+            html += f"<h2>{key}</h2>\n"
             html += f"<p>{data[key]}</p>\n"
         html += """
         <div></div>
@@ -45,6 +48,7 @@ class EmailClient(IClient):
         </body>
         </html>
         """
+        return html
 
     def _send_email(self, sender, recipient, subject, body_html, aws_region):
         # Create a new SES resource and specify a region.

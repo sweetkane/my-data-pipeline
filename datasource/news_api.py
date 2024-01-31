@@ -7,7 +7,7 @@ import os
 
 class NewsAPI(INewsDatasource):
     def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
-        super.__init__(since_date)
+        super().__init__(since_date)
         self.date_key = "publishedAt"
         self.date_format = "%Y-%m-%dT%H:%M:%SZ"
         news_api_key = os.environ.get('NEWS_API_KEY')

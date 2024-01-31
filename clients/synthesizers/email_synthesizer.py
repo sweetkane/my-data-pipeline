@@ -16,7 +16,7 @@ class Topic(Enum):
 
 class EmailSynthesizer:
 
-    def categorize(data: dict) -> dict:
+    def categorize(self, data: dict) -> dict:
         sorted_headlines = {}
         for topic in Topic:
             sorted_headlines[topic] = []
@@ -47,7 +47,7 @@ class EmailSynthesizer:
                 continue
         return sorted_headlines
 
-    def synthesize(data: dict) -> dict:
+    def synthesize(self, data: dict) -> dict:
         result = {}
         for topic in Topic:
             headlines = data[topic]

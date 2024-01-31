@@ -11,9 +11,6 @@ if [ $# -eq 2 ]; then
     repo_name=$2
 fi
 
-lambda_tag=latest
-repo_tag=latest
-
 role=lambda-admin
 if [ $# -eq 3 ]; then
     role=$3
@@ -28,9 +25,21 @@ if [ -z "$AWS_DEFAULT_REGION" ]; then
     exit 1
 fi
 
+lambda_tag=latest
+repo_tag=latest
+
 # create image
 echo "$0: creating image"
-docker build --platform linux/amd64 -t $lambda_name:$lambda_tag .
+docker build \
+    --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+    --build-arg MY_EMAIL_ADDRESS=$MY_EMAIL_ADDRESS \
+    --build-arg OPENAI_API_KEY=$OPENAI_API_KEY \
+    --build-arg NEWS_API_KEY=$NEWS_API_KEY \
+    --build-arg RAPID_API_KEY=$RAPID_API_KEY \
+    --platform linux/amd64 \
+    -t $lambda_name:$lambda_tag .
 
 # point docker at ECR
 echo "$0: pointing docker at ECR"
@@ -71,4 +80,5 @@ aws lambda create-function \
     --function-name "$lambda_name" \
     --package-type Image \
     --code ImageUri=$repo_uri:$repo_tag \
-    --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$role
+    --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$role \
+    --timeout 300
