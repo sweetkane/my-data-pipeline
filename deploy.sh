@@ -76,9 +76,43 @@ docker push $repo_uri:$repo_tag
 # create function
 echo "$0: creating function named $lambda_name"
 aws lambda delete-function --function-name "$lambda_name" 2>/dev/null
-aws lambda create-function \
+function_arn=$(aws lambda create-function \
     --function-name "$lambda_name" \
     --package-type Image \
     --code ImageUri=$repo_uri:$repo_tag \
     --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$role \
-    --timeout 300
+    --timeout 300 \
+    --query FunctionArn \
+    --output text \
+)
+
+# create events rule
+
+lambda_payload="'{\"datasources\":[\"connexun_news\",\"news_now\"],\"clients\":[\"email\"]}'"
+
+echo "$0: creating events rule daily_lambda_trigger"
+aws events delete-rule \
+    --name "daily_lambda_trigger" \
+    2>/dev/null
+rule_arn=$(aws events put-rule \
+    --name "daily_lambda_trigger" \
+    --schedule-expression "cron(0 8 * * ? *)" \
+    --query RuleArn \
+    --output text \
+)
+
+# apply events rule
+echo "$0: applying daily_lambda_trigger to lambda"
+aws lambda add-permission \
+    --function-name "$lambda_name" \
+    --statement-id "EventBridgeRule" \
+    --action "lambda:InvokeFunction" \
+    --principal "events.amazonaws.com" \
+    --source-arn $rule_arn \
+    >/dev/null
+aws events put-targets \
+    --rule "daily_lambda_trigger" \
+    --targets "Id"="1","Arn"="$function_arn","Input"=$lambda_payload \
+    >/dev/null
+
+echo "$0: DONE"
