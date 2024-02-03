@@ -4,19 +4,28 @@ from langchain.output_parsers.enum import EnumOutputParser
 from langchain_core.output_parsers import StrOutputParser
 from enum import Enum
 import json
+from transforms._transform import ITransform
 
 class Topic(Enum):
     WORLD = "World"
-    NATIONAL = "National Politics"
+    US_POLITICS = "US Politics"
     ENTERTAINMENT = "Entertainment"
     SCIENCE_AND_TECH = "Science & Technology"
     FINANCE = "Finance"
     SPORTS = "Sports"
 
 
-class EmailSynthesizer:
+class NewsSynthesizer(ITransform):
 
-    def categorize(self, data: dict) -> dict:
+    def __init__(self) -> None:
+        self.model = ChatOpenAI()
+
+    def transform(self, data: dict) -> dict:
+        categorized = self._categorize(data)
+        synthesized = self._synthesize(categorized)
+        return synthesized
+
+    def _categorize(self, data: dict) -> dict:
         sorted_headlines = {}
         for topic in Topic:
             sorted_headlines[topic] = []
@@ -30,7 +39,7 @@ class EmailSynthesizer:
 
                     {headline}
 
-                    ONLY USE ONE OF THE PREOVIDED TOPIC CATEGORIES!
+                    ONLY USE ONE OF THE PROVIDED TOPIC CATEGORIES!
                     DO NOT CREATE A NEW CATEGORY!
 
                     Instructions: {instructions}
@@ -40,33 +49,34 @@ class EmailSynthesizer:
                         "instructions": parser.get_format_instructions()
                     }
                 )
-                chain = prompt | ChatOpenAI() | parser
+
+                chain = prompt | self.model | parser
                 topic = chain.invoke({"headline": json.dumps(headline)})
                 sorted_headlines[topic].append(headline)
             except:
                 continue
         return sorted_headlines
 
-    def synthesize(self, data: dict) -> dict:
+    def _synthesize(self, data: dict) -> dict:
         result = {}
         for topic in Topic:
             headlines = data[topic]
-            prompt = PromptTemplate(
-            template="""
-            Attached: a json file which contains a lot of recent news headlines for the topic of {topic}
-            You are a Harvard alum journalist working for a digital news startup.
-            Your job is to take these headlines and summarize them.
-            Create the perfect 3-5 sentence summary that combines and synthesizes as much relevant information as postible
 
-            {headlines}
-            """,
-            input_variables=["headlines"],
-            partial_variables={
-                "topic": topic.value
-            }
+            prompt = PromptTemplate(
+                template="""
+                Attached: a bunch of recent news headlines for the topic of {topic}
+                Your job is to take these headlines and summarize them.
+                Create the perfect 3-5 sentence summary that combines and synthesizes as much relevant information as possible
+                DO NOT just list the headlines. You must craft an elegant, well-written summary. Feel free to editorialize a little!
+
+                HEADLINES: {headlines}
+                """,
+                input_variables=["headlines"],
+                partial_variables={
+                    "topic": topic.value
+                }
             )
-            model = ChatOpenAI()
-            chain = prompt | model | StrOutputParser()
+            chain = prompt | self.model | StrOutputParser()
 
             result[topic.value] = chain.invoke({"headlines": headlines})
         return result

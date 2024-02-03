@@ -1,26 +1,22 @@
-from datetime import date, timedelta
+from datetime import date
 import boto3
 from botocore.exceptions import ClientError
-from clients.synthesizers.email_synthesizer import EmailSynthesizer
 from clients._client import IClient
 import os
 
 class EmailClient(IClient):
-    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
-        super().__init__(since_date)
-        self.subject = f"Daily Newsletter: {date.today().strftime('%A, %B %-d %Y')}"
+    def __init__(self) -> None:
+        super().__init__()
+        self.subject = f"🤖RoboNews🤖: {date.today().strftime('%a, %b %-d %Y')}"
+        self.title = "Good Morning!\n"
+        self.subtitle = "Here's your 🤖RoboNews🤖 for the day..."
 
-    def _gather_data(self) -> dict:
-        # pulling data from dynamodb
-        pass
-
-    def _synthesize(self, data: dict) -> dict:
-        synthesizer = EmailSynthesizer()
-        categorized = synthesizer.categorize(data)
-        synthesized = synthesizer.synthesize(categorized)
-        return synthesized
-
-    def _send(self, data: dict):
+    def post(self, data: dict):
+        """
+        data should be a dict with
+        - KEY = Subtitle
+        - VALUE = Content for that subtitle
+        """
         self._send_email(
             sender=os.environ["MY_EMAIL_ADDRESS"],
             recipient=os.environ["MY_EMAIL_ADDRESS"],
@@ -34,17 +30,20 @@ class EmailClient(IClient):
         <html>
         <head></head>
         <body>
-        <h1>Good Morning! Todays News:</h1>
+        <h1>{self.title}</h1>
+        <div>{self.subtitle}</div>
+        <br></br>
+        <hr>
         """
         for key in data.keys():
-            print(key)
-            print(data[key])
-            print("======")
             html += f"<h2>{key}</h2>\n"
             html += f"<p>{data[key]}</p>\n"
         html += """
-        <div></div>
-        <p>Have a good day!</p>
+        <hr>
+        <br></br>
+        <div>That's all... Have a great day!</div>
+        <br></br>
+        <a href="https://github.com/sweetkane/my-data-pipeline">GitHub</a>
         </body>
         </html>
         """
