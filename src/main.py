@@ -30,17 +30,38 @@ def handler(event, context):
     client_keys = event["clients"]
 
     data = []
-    for key in datasource_keys:
-        datasource = datasources[key]()
-        data += datasource.get()
+    try:
+        for key in datasource_keys:
+            datasource = datasources[key]()
+            data += datasource.get()
+    except Exception as e:
+        return f"""
+        Failed to get from datasource
+        -----------------------------
+        e: {e}
+        """
+    try:
+        for key in transform_keys:
+            transform = transforms[key]()
+            data = transform.apply(data)
+    except Exception as e:
+        return f"""
+        Failed to apply transforms
+        --------------------------
+        e: {e}
+        """
+    try:
+        for key in client_keys:
+            client = clients[key]()
+            client.post(data)
+    except Exception as e:
+        return f"""
+        Failed to post to client
+        ------------------------
+        e: {e}
+        """
 
-    for key in transform_keys:
-        transform = transforms[key]()
-        data = transform.transform(data)
-
-    for key in client_keys:
-        client = clients[key]()
-        client.post(data)
+    return "Finished successfully :D"
 
 
 if __name__ == '__main__':

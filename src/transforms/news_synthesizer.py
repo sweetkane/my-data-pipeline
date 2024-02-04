@@ -20,7 +20,7 @@ class NewsSynthesizer(ITransform):
     def __init__(self) -> None:
         self.model = ChatOpenAI()
 
-    def transform(self, data: dict) -> dict:
+    def apply(self, data: dict) -> dict:
         categorized = self._categorize(data)
         synthesized = self._synthesize(categorized)
         return synthesized
