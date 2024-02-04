@@ -1,6 +1,5 @@
 FROM public.ecr.aws/lambda/python:3.11
 
-
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
 ARG AWS_DEFAULT_REGION
@@ -17,15 +16,10 @@ ENV OPENAI_API_KEY ${OPENAI_API_KEY}
 ENV NEWS_API_KEY ${NEWS_API_KEY}
 ENV RAPID_API_KEY ${RAPID_API_KEY}
 
-COPY requirements.txt ${LAMBDA_TASK_ROOT}
-RUN pip install -r requirements.txt
+COPY src ${LAMBDA_TASK_ROOT}
 
-COPY main.py ${LAMBDA_TASK_ROOT}
-COPY datasource ${LAMBDA_TASK_ROOT}/datasource
-COPY clients ${LAMBDA_TASK_ROOT}/clients
+RUN pip install -r ${LAMBDA_TASK_ROOT}/requirements.txt
 
 ENV PYTHONPATH "${PYTHONPATH}:${LAMBDA_TASK_ROOT}"
-ENV PYTHONPATH "${PYTHONPATH}:${LAMBDA_TASK_ROOT}/clients"
-ENV PYTHONPATH "${PYTHONPATH}:${LAMBDA_TASK_ROOT}/datasource"
 
 CMD [ "main.handler" ]

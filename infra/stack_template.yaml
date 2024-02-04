@@ -1,6 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Lambda with EventBridge Rule
 
+Parameters:
+  LambdaFunctionName:
+    Type: String
+    Description: Name of the lambda function
+  ImageUri:
+    Type: String
+    Description: Uri of the docker image containing the lambda function.
+
 Resources:
   LambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -27,19 +35,17 @@ Resources:
   MyLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
+      FunctionName: !Ref LambdaFunctionName
+      PackageType: Image
+      Timeout: 300
       Code:
-        ZipFile: |
-          def lambda_handler(event, context):
-              print("Hello, World!")
-              return {"message": "Hello, World!"}
-      Handler: index.lambda_handler
+        ImageUri: !Ref ImageUri
       Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: python3.8
 
   DailyTriggerRule:
     Type: AWS::Events::Rule
     Properties:
-      ScheduleExpression: "cron(0 12 * * ? *)" # Trigger at 12:00 PM UTC every day
+      ScheduleExpression: "cron(0 12 * * ? *)" # Daily at 6am CST
       Targets:
         - Arn: !GetAtt MyLambdaFunction.Arn
           Id: MyLambdaFunctionTarget
@@ -47,14 +53,13 @@ Resources:
             {
               "datasources": ["news_now"],
               "transforms": ["news_synthesizer"],
-              "clients": ["print", "email"]
+              "clients": ["email"]
             }
-
 
   PermissionForEventsToInvokeLambda:
     Type: AWS::Lambda::Permission
     Properties:
-      FunctionName: !Ref MyLambdaFunction
+      FunctionName: !Ref LambdaFunctionName
       Action: lambda:InvokeFunction
       Principal: events.amazonaws.com
       SourceArn: !GetAtt DailyTriggerRule.Arn

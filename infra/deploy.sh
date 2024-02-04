@@ -1,77 +1,38 @@
 #!/bin/bash
 
+########################## HANDLE ARGS ################################
+
 if [ $# -eq 0 ]; then
-    echo "Usage:    $0 <lambda_name> <repo_name>(optional) <IAM role>(optional)"
+    echo "Usage:    $0 <lambda_name>"
     exit 1
 fi
 lambda_name=$1
 
-repo_name=repo_$lambda_name
-if [ $# -eq 2 ]; then
-    repo_name=$2
-fi
+stack_name=stack--$lambda_name
 
-role=lambda-admin
-if [ $# -eq 3 ]; then
-    role=$3
-fi
+#######################################################################
 
-if [ -z "$AWS_ACCOUNT_ID" ]; then
-    echo "Err: AWS_ACCOUNT_ID environment variable is not set"
-    exit 1
-fi
-if [ -z "$AWS_DEFAULT_REGION" ]; then
-    echo "Err: AWS_DEFAULT_REGION environment variable is not set"
-    exit 1
-fi
-
-lambda_tag=latest
-repo_tag=latest
-
-# create image
-echo "$0: creating image"
-docker build \
-    --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-    --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
-    --build-arg MY_EMAIL_ADDRESS=$MY_EMAIL_ADDRESS \
-    --build-arg OPENAI_API_KEY=$OPENAI_API_KEY \
-    --build-arg NEWS_API_KEY=$NEWS_API_KEY \
-    --build-arg RAPID_API_KEY=$RAPID_API_KEY \
-    --platform linux/amd64 \
-    -t $lambda_name:$lambda_tag .
-
-# point docker at ECR
-echo "$0: pointing docker at ECR"
-aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-
-#create repo
-echo "$0: creating repo named $repo_name"
-repo_uri=$(aws ecr create-repository \
-    --repository-name "$repo_name" \
-    --region "$AWS_DEFAULT_REGION" \
-    --image-scanning-configuration scanOnPush=true \
-    --image-tag-mutability MUTABLE \
-    --query repository.repositoryUri \
-    --output text \
-    2>/dev/null \
-)
-
+# push lambda image
+echo "push lambda image: STARTING"
+image_uri=$(./infra/push_lambda_image.sh $lambda_name)
 if [[ $? -ne 0 ]]; then
-    repo_uri=$(aws ecr describe-repositories \
-        --repository-names $repo_name \
-        --query repositories[0].repositoryUri \
-        --output text \
-    )
+    echo "push lambda image: FAILED"
+    exit 1
 fi
 
-# tag local image into ECR repo
-echo "$0: tagging local image into ECR repo"
-docker tag $lambda_name:$lambda_tag $repo_uri:$repo_tag
+echo "push lambda image: DONE"
+echo "cloudformation deploy: STARTING"
 
-# push local to ECR
-echo "$0: pushing to ECR repo"
-docker push $repo_uri:$repo_tag
+aws cloudformation deploy \
+    --template-file infra/stack_template.yaml \
+    --stack-name $stack_name \
+    --capabilities CAPABILITY_IAM \
+    --parameter-overrides \
+        LambdaFunctionName=$lambda_name \
+        ImageUri=$image_uri
+
+echo "cloudformation deploy: DONE"
+exit 0
 
 # create function
 echo "$0: creating function named $lambda_name"
@@ -79,7 +40,7 @@ aws lambda delete-function --function-name "$lambda_name" 2>/dev/null
 function_arn=$(aws lambda create-function \
     --function-name "$lambda_name" \
     --package-type Image \
-    --code ImageUri=$repo_uri:$repo_tag \
+    --code ImageUri=$image_uri \
     --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$role \
     --timeout 300 \
     --query FunctionArn \
@@ -87,7 +48,6 @@ function_arn=$(aws lambda create-function \
 )
 
 # create events rule
-
 lambda_payload="'{\"datasources\":[\"connexun_news\",\"news_now\"],\"clients\":[\"email\"]}'"
 
 echo "$0: creating events rule daily_lambda_trigger"

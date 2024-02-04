@@ -38,9 +38,17 @@ aws lambda invoke \
 aws lambda invoke \
     --function-name my-data-pipeline \
     --cli-binary-format raw-in-base64-out \
-    --payload '{"datasources": ["connexun_news", "news_now"], "clients": ["email"]}' \
+    --payload '{"datasources":["news_now"],"transforms":["news_synthesizer"],"clients": ["email"]}' \
     res.txt
 
 
+'{"datasources":["news_now"],"transforms":["news_synthesizer"],"clients": ["email"]}'
+
 https://docs.aws.amazon.com/lambda/latest/dg/python-image.html#python-image-instructions
 https://docs.aws.amazon.com/cli/latest/reference/lambda/invoke.html#examples
+
+repo regex:
+(?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*
+
+stack regex:
+[a-zA-Z][-a-zA-Z0-9]*|arn:[-a-zA-Z0-9:/._+]*
