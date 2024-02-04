@@ -52,3 +52,6 @@ repo regex:
 
 stack regex:
 [a-zA-Z][-a-zA-Z0-9]*|arn:[-a-zA-Z0-9:/._+]*
+
+TODO
+- migrate from event bridge rule to scheduler PRIORITY=LOW

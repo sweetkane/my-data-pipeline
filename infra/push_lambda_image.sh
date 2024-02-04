@@ -49,10 +49,9 @@ if [ $# -eq 2 ]; then
     repo_name=$2
 fi
 
-lambda_tag=latest
-repo_tag=latest
-
 #######################################################################
+lambda_tag=latest
+repo_tag=$(uuidgen)
 
 # create image
 docker build \
