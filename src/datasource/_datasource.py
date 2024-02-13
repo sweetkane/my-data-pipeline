@@ -2,15 +2,16 @@ from datetime import date, datetime, timedelta
 
 
 class IDatasource:
-    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
+    def __init__(self, since_date: date = date.today() - timedelta(days=1)) -> None:
         pass
 
     def get(self) -> dict:
         pass
 
+
 class INewsDatasource(IDatasource):
 
-    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
+    def __init__(self, since_date: date = date.today() - timedelta(days=1)) -> None:
         self.since_date = since_date
 
     def get(self) -> dict:
@@ -55,5 +56,5 @@ class INewsDatasource(IDatasource):
             if article_datetime.date() < self.since_date:
                 to_remove.append(i)
         for i in reversed(to_remove):
-            articles = articles[:i] + articles[i+1:]
+            articles = articles[:i] + articles[i + 1 :]
         return articles

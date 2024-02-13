@@ -1,6 +1,7 @@
-from datetime import date, timedelta
-from clients._client import IClient
 import json
+from datetime import date, timedelta
+
+from clients._client import IClient
 
 
 class PrintClient(IClient):
@@ -12,4 +13,3 @@ class PrintClient(IClient):
             print(json.dumps(data))
         except:
             print(data)
-

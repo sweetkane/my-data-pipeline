@@ -1,19 +1,21 @@
-import requests
-from datasource._datasource import INewsDatasource
-from datetime import date, timedelta
 import os
+from datetime import date, timedelta
+
+import requests
+
+from datasource._datasource import INewsDatasource
 
 
 class ConnexunNews(INewsDatasource):
-    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
+    def __init__(self, since_date: date = date.today() - timedelta(days=1)) -> None:
         super().__init__(since_date)
         self.date_key = "PublishedOn"
         self.date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
         self.url = "https://news67.p.rapidapi.com/v2/feed"
-        self.params = {"batchSize":"30","languages":"en"}
+        self.params = {"batchSize": "30", "languages": "en"}
         self.headers = {
-            "X-RapidAPI-Key": os.environ.get('RAPID_API_KEY'),
-            "X-RapidAPI-Host": "news67.p.rapidapi.com"
+            "X-RapidAPI-Key": os.environ.get("RAPID_API_KEY"),
+            "X-RapidAPI-Host": "news67.p.rapidapi.com",
         }
 
     def _get_articles(self) -> list:
@@ -22,7 +24,7 @@ class ConnexunNews(INewsDatasource):
             print(f"e: {response.status_code}")
             return []
         response = response.json()
-        articles = response['news']
+        articles = response["news"]
         return articles
 
     def _extract_headline(self, raw: dict) -> str:

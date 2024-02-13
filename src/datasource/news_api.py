@@ -1,21 +1,22 @@
-from datetime import date, timedelta
-from datasource._datasource import INewsDatasource
-from newsapi import NewsApiClient
 import os
+from datetime import date, timedelta
 
+from newsapi import NewsApiClient
+
+from datasource._datasource import INewsDatasource
 
 
 class NewsAPI(INewsDatasource):
-    def __init__(self, since_date: date = date.today()-timedelta(days=1)) -> None:
+    def __init__(self, since_date: date = date.today() - timedelta(days=1)) -> None:
         super().__init__(since_date)
         self.date_key = "publishedAt"
         self.date_format = "%Y-%m-%dT%H:%M:%SZ"
-        news_api_key = os.environ.get('NEWS_API_KEY')
+        news_api_key = os.environ.get("NEWS_API_KEY")
         self.api_client = NewsApiClient(news_api_key)
 
     def _get_articles(self) -> list:
         res = self.api_client.get_top_headlines()
-        articles = res['articles']
+        articles = res["articles"]
         return articles
 
     def _extract_headline(self, raw: dict) -> str:

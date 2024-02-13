@@ -1,10 +1,13 @@
-from langchain.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
-from langchain.output_parsers.enum import EnumOutputParser
-from langchain_core.output_parsers import StrOutputParser
-from enum import Enum
 import json
+from enum import Enum
+
+from langchain.output_parsers.enum import EnumOutputParser
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+
 from transforms._transform import ITransform
+
 
 class Topic(Enum):
     WORLD = "World"
@@ -47,7 +50,7 @@ class NewsSynthesizer(ITransform):
                     input_variables=["headline"],
                     partial_variables={
                         "instructions": parser.get_format_instructions()
-                    }
+                    },
                 )
 
                 chain = prompt | self.model | parser
@@ -72,9 +75,7 @@ class NewsSynthesizer(ITransform):
                 HEADLINES: {headlines}
                 """,
                 input_variables=["headlines"],
-                partial_variables={
-                    "topic": topic.value
-                }
+                partial_variables={"topic": topic.value},
             )
             chain = prompt | self.model | StrOutputParser()
 

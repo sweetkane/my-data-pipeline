@@ -1,8 +1,11 @@
+import os
 from datetime import date
+
 import boto3
 from botocore.exceptions import ClientError
+
 from clients._client import IClient
-import os
+
 
 class EmailClient(IClient):
     def __init__(self) -> None:
@@ -22,7 +25,7 @@ class EmailClient(IClient):
             recipient=os.environ["MY_EMAIL_ADDRESS"],
             subject=self.subject,
             body_html=self._to_html(data),
-            aws_region=os.environ["AWS_DEFAULT_REGION"]
+            aws_region=os.environ["AWS_DEFAULT_REGION"],
         )
 
     def _to_html(self, data: dict):
@@ -51,32 +54,32 @@ class EmailClient(IClient):
 
     def _send_email(self, sender, recipient, subject, body_html, aws_region):
         # Create a new SES resource and specify a region.
-        client = boto3.client('ses', region_name=aws_region)
+        client = boto3.client("ses", region_name=aws_region)
 
         # Try to send the email.
         try:
             response = client.send_email(
                 Destination={
-                    'ToAddresses': [
+                    "ToAddresses": [
                         recipient,
                     ],
                 },
                 Message={
-                    'Body': {
-                        'Html': {
-                            'Charset': "UTF-8",
-                            'Data': body_html,
+                    "Body": {
+                        "Html": {
+                            "Charset": "UTF-8",
+                            "Data": body_html,
                         },
                     },
-                    'Subject': {
-                        'Charset': "UTF-8",
-                        'Data': subject,
+                    "Subject": {
+                        "Charset": "UTF-8",
+                        "Data": subject,
                     },
                 },
                 Source=sender,
             )
         except ClientError as e:
-            print(e.response['Error']['Message'])
+            print(e.response["Error"]["Message"])
         else:
             print("Email sent! Message ID:"),
-            print(response['MessageId'])
+            print(response["MessageId"])
