@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#######################################################################
 #################### ASSERT ENV VARIABLES SET #########################
 
 if [ -z "$AWS_ACCOUNT_ID" ]; then
@@ -35,7 +34,7 @@ if [ -z "$RAPID_API_KEY" ]; then
     echo "Err: RAPID_API_KEY environment variable is not set"
     exit 1
 fi
-#######################################################################
+
 ########################## HANDLE ARGS ################################
 
 if [ $# -eq 0 ]; then
@@ -69,7 +68,7 @@ docker build \
 
 # point docker at ECR
 aws ecr get-login-password \
-    --region $AWS_DEFAULT_REGION | \
+    --region $AWS_DEFAULT_REGION |
     docker login \
         --username AWS \
         --password-stdin \
@@ -77,20 +76,22 @@ aws ecr get-login-password \
         >/dev/null
 
 #create repo
-repo_uri=$(aws ecr create-repository \
-    --repository-name "$repo_name" \
-    --region "$AWS_DEFAULT_REGION" \
-    --image-scanning-configuration scanOnPush=true \
-    --image-tag-mutability MUTABLE \
-    --query repository.repositoryUri \
-    --output text \
-    2>/dev/null \
+repo_uri=$(
+    aws ecr create-repository \
+        --repository-name "$repo_name" \
+        --region "$AWS_DEFAULT_REGION" \
+        --image-scanning-configuration scanOnPush=true \
+        --image-tag-mutability MUTABLE \
+        --query repository.repositoryUri \
+        --output text \
+        2>/dev/null
 )
 if [[ $? -ne 0 ]]; then
-    repo_uri=$(aws ecr describe-repositories \
-        --repository-names $repo_name \
-        --query repositories[0].repositoryUri \
-        --output text \
+    repo_uri=$(
+        aws ecr describe-repositories \
+            --repository-names $repo_name \
+            --query repositories[0].repositoryUri \
+            --output text
     )
 fi
 
