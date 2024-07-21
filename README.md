@@ -12,10 +12,11 @@ To create your own RoboNews bot with this repo, you can
 2. add the needed environment variables (found at the top of `infra/push_lambda_image.sh`)
 3. run `./infra/deploy.sh`
 
-## Tech Stack
+## Technical details
 - infra
   - aws: ecs, lambda, cloudformation, eventbridge
   - docker
 - src
   - python
   - langchain
+  - plugin architecture
