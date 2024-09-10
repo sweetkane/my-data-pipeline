@@ -54,9 +54,7 @@ repo_tag=$(uuidgen)
 
 # create image
 docker build \
-    --file infra/Dockerfile \
-    --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-    --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    --file sender/Dockerfile \
     --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
     --build-arg MY_EMAIL_ADDRESS=$MY_EMAIL_ADDRESS \
     --build-arg OPENAI_API_KEY=$OPENAI_API_KEY \

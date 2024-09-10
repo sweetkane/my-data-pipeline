@@ -21,49 +21,21 @@ class EmailClient(IClient):
         - VALUE = Content for that subtitle
         """
         self._send_email(
-            sender=os.environ["MY_EMAIL_ADDRESS"],
-            recipient=os.environ["MY_EMAIL_ADDRESS"],
+            sender=os.environ["MY_EMAIL_ADDRESS"],  # TODO fix
+            recipients=[os.environ["MY_EMAIL_ADDRESS"]],  # TODO fix
             subject=self.subject,
             body_html=self._to_html(data),
             aws_region=os.environ["AWS_DEFAULT_REGION"],
         )
 
-    def _to_html(self, data: dict):
-        html = f"""
-        <html>
-        <head></head>
-        <body>
-        <h1>{self.title}</h1>
-        <div>{self.subtitle}</div>
-        <br></br>
-        <hr>
-        """
-        for key in data.keys():
-            html += f"<h2>{key}</h2>\n"
-            html += f"<p>{data[key]}</p>\n"
-        html += """
-        <hr>
-        <br></br>
-        <div>That's all... Have a great day!</div>
-        <br></br>
-        <a href="https://github.com/sweetkane/my-data-pipeline">GitHub</a>
-        </body>
-        </html>
-        """
-        return html
-
-    def _send_email(self, sender, recipient, subject, body_html, aws_region):
+    def _send_email(self, sender, recipients, subject, body_html, aws_region):
         # Create a new SES resource and specify a region.
         client = boto3.client("ses", region_name=aws_region)
 
         # Try to send the email.
         try:
             response = client.send_email(
-                Destination={
-                    "ToAddresses": [
-                        recipient,
-                    ],
-                },
+                Destination={"ToAddresses": recipients},
                 Message={
                     "Body": {
                         "Html": {
@@ -83,3 +55,27 @@ class EmailClient(IClient):
         else:
             print("Email sent! Message ID:"),
             print(response["MessageId"])
+
+    def _to_html(self, data: dict):
+        html = f"""
+        <html>
+        <head></head>
+        <body>
+        <h1>{self.title}</h1>
+        <div>{self.subtitle}</div>
+        <br></br>
+        <hr>
+        """
+        for key in data.keys():
+            html += f"<h2>{key}</h2>\n"
+            html += f"<p>{data[key]}</p>\n"
+        html += """
+        <hr>
+        <br></br>
+        <div>That's all... Have a great day!</div>
+        <br></br>
+        <a href="https://github.com/sweetkane/robonews">GitHub</a>
+        </body>
+        </html>
+        """
+        return html

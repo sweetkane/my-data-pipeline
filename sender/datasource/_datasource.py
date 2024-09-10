@@ -45,6 +45,9 @@ class INewsDatasource(IDatasource):
         pass
 
     def _extract_datetime(self, raw: dict) -> datetime:
+        if not self.date_key or not self.date_format:
+            raise Exception("Need to set date_key and date_format!")
+
         article_datetime = raw[self.date_key]
         article_datetime = datetime.strptime(article_datetime, self.date_format)
         return article_datetime

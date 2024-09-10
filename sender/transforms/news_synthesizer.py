@@ -5,7 +5,6 @@ from langchain.output_parsers.enum import EnumOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
-
 from transforms._transform import ITransform
 
 
@@ -16,6 +15,11 @@ class Topic(Enum):
     SCIENCE_AND_TECH = "Science & Technology"
     FINANCE = "Finance"
     SPORTS = "Sports"
+
+
+"""
+Categorizes news stories by topic and summarizes all the stories for each topic
+"""
 
 
 class NewsSynthesizer(ITransform):

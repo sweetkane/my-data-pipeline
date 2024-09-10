@@ -1,0 +1,7 @@
+
+
+# subscribe lambda needs to be rate limited
+
+# unsubscribe lambda needs to take in a token
+
+# dynamodb on demand is quite cheap ~ $.25 per month

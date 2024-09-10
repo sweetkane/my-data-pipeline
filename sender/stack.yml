@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Lambda with EventBridge Rule
 
 Parameters:
@@ -10,35 +10,36 @@ Parameters:
     Description: Uri of the docker image containing the lambda function.
 
 Resources:
+  # Sender Lambda
   LambdaExecutionRole:
-  Type: AWS::IAM::Role
-  Properties:
-    AssumeRolePolicyDocument:
-      Version: '2012-10-17'
-      Statement:
-        - Effect: Allow
-          Principal:
-            Service: lambda.amazonaws.com
-          Action: 'sts:AssumeRole'
-    Policies:
-      - PolicyName: LambdaLoggingAndSESPolicy
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Action:
-                - 'logs:CreateLogGroup'
-                - 'logs:CreateLogStream'
-                - 'logs:PutLogEvents'
-              Resource: 'arn:aws:logs:*:*:*'
-            - Effect: Allow
-              Action:
-                - 'ses:SendEmail'
-                - 'ses:SendRawEmail'
-                - 'ses:SendTemplatedEmail'
-              Resource: '*'
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaSESPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "arn:aws:logs:*:*:*"
+              - Effect: Allow
+                Action:
+                  - "ses:SendEmail"
+                  - "ses:SendRawEmail"
+                  - "ses:SendTemplatedEmail"
+                Resource: arn:aws:ses:us-east-1:123456789012:identity/robonews.kanesweet.com
 
-  MyLambdaFunction:
+  SenderLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: !Ref LambdaFunctionName
