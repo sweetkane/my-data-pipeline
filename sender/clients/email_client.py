@@ -3,7 +3,6 @@ from datetime import date
 
 import boto3
 from botocore.exceptions import ClientError
-
 from clients._client import IClient
 
 
@@ -13,6 +12,9 @@ class EmailClient(IClient):
         self.subject = f"🤖RoboNews🤖: {date.today().strftime('%a, %b %-d %Y')}"
         self.title = "Good Morning!\n"
         self.subtitle = "Here's your 🤖RoboNews🤖 for the day..."
+
+        self.dynamodb = boto3.resource("dynamodb")
+        self.userEmailsTable = self.dynamodb.Table("UserEmails")
 
     def post(self, data: dict):
         """
@@ -27,6 +29,17 @@ class EmailClient(IClient):
             body_html=self._to_html(data),
             aws_region=os.environ["AWS_DEFAULT_REGION"],
         )
+
+    def _get_recipients(self):
+        try:
+            response = self.userEmailsTable.scan()
+            data = response.get("Items", [])
+
+            # Extract and print the emails
+            emails = [item["Email"] for item in data]
+            return emails
+        except Exception as e:
+            raise e
 
     def _send_email(self, sender, recipients, subject, body_html, aws_region):
         # Create a new SES resource and specify a region.
@@ -52,6 +65,7 @@ class EmailClient(IClient):
             )
         except ClientError as e:
             print(e.response["Error"]["Message"])
+            raise e
         else:
             print("Email sent! Message ID:"),
             print(response["MessageId"])
