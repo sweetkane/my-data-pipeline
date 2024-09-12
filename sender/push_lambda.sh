@@ -6,22 +6,22 @@ if [ -z "$AWS_ACCOUNT_ID" ]; then
     echo "Err: AWS_ACCOUNT_ID environment variable is not set"
     exit 1
 fi
-if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-    echo "Err: AWS_ACCESS_KEY_ID environment variable is not set"
-    exit 1
-fi
-if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-    echo "Err: AWS_SECRET_ACCESS_KEY environment variable is not set"
-    exit 1
-fi
+# if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+#     echo "Err: AWS_ACCESS_KEY_ID environment variable is not set"
+#     exit 1
+# fi
+# if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+#     echo "Err: AWS_SECRET_ACCESS_KEY environment variable is not set"
+#     exit 1
+# fi
 if [ -z "$AWS_DEFAULT_REGION" ]; then
     echo "Err: AWS_DEFAULT_REGION environment variable is not set"
     exit 1
 fi
-if [ -z "$MY_EMAIL_ADDRESS" ]; then
-    echo "Err: MY_EMAIL_ADDRESS environment variable is not set"
-    exit 1
-fi
+# if [ -z "$MY_EMAIL_ADDRESS" ]; then
+#     echo "Err: MY_EMAIL_ADDRESS environment variable is not set"
+#     exit 1
+# fi
 if [ -z "$OPENAI_API_KEY" ]; then
     echo "Err: OPENAI_API_KEY environment variable is not set"
     exit 1
@@ -35,6 +35,12 @@ if [ -z "$RAPID_API_KEY" ]; then
     exit 1
 fi
 
+docker -v >/dev/null
+if [[ $? -ne 0 ]]; then
+    echo "Err: docker not installed"
+    exit 1
+fi
+
 ########################## HANDLE ARGS ################################
 
 if [ $# -eq 0 ]; then
@@ -43,7 +49,7 @@ if [ $# -eq 0 ]; then
 fi
 lambda_name=$1
 
-repo_name=repo_$lambda_name
+repo_name="${lambda_name}_repo"
 if [ $# -eq 2 ]; then
     repo_name=$2
 fi
@@ -55,8 +61,6 @@ repo_tag=$(uuidgen)
 # create image
 docker build \
     --file sender/Dockerfile \
-    --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
-    --build-arg MY_EMAIL_ADDRESS=$MY_EMAIL_ADDRESS \
     --build-arg OPENAI_API_KEY=$OPENAI_API_KEY \
     --build-arg NEWS_API_KEY=$NEWS_API_KEY \
     --build-arg RAPID_API_KEY=$RAPID_API_KEY \
@@ -71,7 +75,6 @@ aws ecr get-login-password \
         --username AWS \
         --password-stdin \
         $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com \
-        >/dev/null
 
 #create repo
 repo_uri=$(

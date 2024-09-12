@@ -23,8 +23,8 @@ class EmailClient(IClient):
         - VALUE = Content for that subtitle
         """
         self._send_email(
-            sender=os.environ["MY_EMAIL_ADDRESS"],  # TODO fix
-            recipients=[os.environ["MY_EMAIL_ADDRESS"]],  # TODO fix
+            sender="robonews@kanesweet.com",
+            recipients=self._get_recipients(),
             subject=self.subject,
             body_html=self._to_html(data),
             aws_region=os.environ["AWS_DEFAULT_REGION"],

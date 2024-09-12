@@ -37,7 +37,7 @@ Resources:
                   - "ses:SendEmail"
                   - "ses:SendRawEmail"
                   - "ses:SendTemplatedEmail"
-                Resource: arn:aws:ses:us-east-1:123456789012:identity/robonews.kanesweet.com
+                Resource: arn:aws:ses:us-east-1:123456789012:identity/kanesweet.com
 
   SenderLambdaFunction:
     Type: AWS::Lambda::Function
