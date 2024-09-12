@@ -1,27 +1,15 @@
 #!/bin/bash
 
-#################### ASSERT ENV VARIABLES SET #########################
+### ASSERTS ###
 
 if [ -z "$AWS_ACCOUNT_ID" ]; then
     echo "Err: AWS_ACCOUNT_ID environment variable is not set"
     exit 1
 fi
-# if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-#     echo "Err: AWS_ACCESS_KEY_ID environment variable is not set"
-#     exit 1
-# fi
-# if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-#     echo "Err: AWS_SECRET_ACCESS_KEY environment variable is not set"
-#     exit 1
-# fi
 if [ -z "$AWS_DEFAULT_REGION" ]; then
     echo "Err: AWS_DEFAULT_REGION environment variable is not set"
     exit 1
 fi
-# if [ -z "$MY_EMAIL_ADDRESS" ]; then
-#     echo "Err: MY_EMAIL_ADDRESS environment variable is not set"
-#     exit 1
-# fi
 if [ -z "$OPENAI_API_KEY" ]; then
     echo "Err: OPENAI_API_KEY environment variable is not set"
     exit 1
@@ -41,7 +29,7 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-########################## HANDLE ARGS ################################
+### VARIABLES ###
 
 if [ $# -eq 0 ]; then
     echo "Usage:    $0 <lambda_name> <repo_name>(optional)"
@@ -54,9 +42,10 @@ if [ $# -eq 2 ]; then
     repo_name=$2
 fi
 
-#######################################################################
 lambda_tag=latest
 repo_tag=$(uuidgen)
+
+### SCRIPT BODY ###
 
 # create image
 docker build \

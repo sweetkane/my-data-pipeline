@@ -8,7 +8,10 @@ sender_lambda_name="sender_lambda"
 sender_template_url="s3://kanesweet/$bucket_name/sender/stack.yml"
 
 ## Subscription
-subscription_template_url="s3://kanesweet/$bucket_name/subscription/stack.yml"
+subscription_s3_path="s3://kanesweet/$bucket_name/subscription"
+subscription_template_url="$subscription_s3_path/stack.yml"
+subscribe_lambda_name="subscribe_lambda"
+unsubscribe_lambda_name="unsubscribe_lambda"
 
 stack_name=stack--$lambda_name
 
@@ -25,40 +28,53 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "[deploy.sh] push sender lambda image: SUCCEEDED"
 
-# upload sender stack to S3
-echo "[deploy.sh] upload sender stack to S3: STARTING"
+# upload sender template to S3
+echo "[deploy.sh] upload sender template to S3: STARTING"
 aws s3 cp sender/stack.yml $sender_template_url
 if [[ $? -ne 0 ]]; then
-    echo "[deploy.sh] upload sender stack to S3: FAILED"
+    echo "[deploy.sh] upload sender template to S3: FAILED"
     exit $?
 fi
-echo "[deploy.sh] upload sender stack to S3: SUCCEEDED"
+echo "[deploy.sh] upload sender template to S3: SUCCEEDED"
 
 
 ### Subscription ###
 
-# upload sender stack to S3
-echo "[deploy.sh] upload subscription stack to S3: STARTING"
-aws s3 cp subscription/stack.yml $subscription_template_url
+# upload lambda zips to S3
+echo "[deploy.sh] upload subscription lambdas to S3: STARTING"
+tmp=$(./subscription/push_lambda.sh $subscribe_lambda_name $subscription_s3_path)
+tmp=$(./subscription/push_lambda.sh $unsubscribe_lambda_name $subscription_s3_path)
 if [[ $? -ne 0 ]]; then
-    echo "[deploy.sh] upload subscription stack to S3: FAILED"
+    echo "[deploy.sh] upload subscription lambdas to S3: FAILED"
     exit $?
 fi
-echo "[deploy.sh] upload subscription stack to S3: SUCCEEDED"
+echo "[deploy.sh] upload subscription lambdas to S3: SUCCEEDED"
 
-### Final ###
-exit 1
+# upload subscription template to S3
+echo "[deploy.sh] upload subscription template to S3: STARTING"
+aws s3 cp subscription/stack.yml $subscription_template_url
+if [[ $? -ne 0 ]]; then
+    echo "[deploy.sh] upload subscription template to S3: FAILED"
+    exit $?
+fi
+echo "[deploy.sh] upload subscription template to S3: SUCCEEDED"
+
+exit 0
 
 # deploy stack
+# S3Key: !Sub "subscription/${SubscribeLambdaName}.zip"
 echo "[deploy.sh] deploy stack: STARTING"
 aws cloudformation deploy \
     --template-file stack.yml \
     --stack-name $stack_name \
     --capabilities CAPABILITY_IAM \
     --parameter-overrides \
+    BucketName=$bucket_name \
     SenderLambdaName=$sender_lambda_name \
     SenderLambdaImageUri=$sender_lambda_image_uri \
-    SenderTemplateUrl=$sender_template_url
+    SenderTemplateUrl=$sender_template_url \
+    SubscribeLambdaName=$subscribe_lambda_name \
+    UnsubscribeLambdaName=$unsubscribe_lambda_name
 if [[ $? -ne 0 ]]; then
     echo "[deploy.sh] deploy stack: FAILED"
     exit $?
@@ -70,10 +86,3 @@ echo "[deploy.sh] deplay stack: SUCCEEDED"
 # push subscribe.html, unsubcribe.html to S3
 
 
-
-
-echo "cloudformation deploy: STARTING"
-
-
-
-echo "cloudformation deploy: DONE"
