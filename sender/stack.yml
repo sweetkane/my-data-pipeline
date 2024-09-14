@@ -8,6 +8,9 @@ Parameters:
   ImageUri:
     Type: String
     Description: Uri of the docker image containing the lambda function.
+  UserEmailsTableArn:
+    Type: String
+    Description: The ARN of the DynamoDB UserEmails table
 
 Resources:
   # Sender Lambda
@@ -38,7 +41,14 @@ Resources:
                   - "ses:SendRawEmail"
                   - "ses:SendTemplatedEmail"
                 Resource: arn:aws:ses:us-east-1:123456789012:identity/kanesweet.com
-
+              - Effect: "Allow"
+                Action:
+                  - "dynamodb:GetItem"
+                  - "dynamodb:BatchGetItem"
+                  - "dynamodb:Query"
+                  - "dynamodb:Scan"
+                Resource:
+                  - !Ref UserEmailsTableArn
   SenderLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:

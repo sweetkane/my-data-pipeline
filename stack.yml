@@ -20,9 +20,9 @@ Parameters:
   UnsubscribeLambdaName:
     Type: String
     Description: Name of the unsubscribe lambda
-  SubscriptionS3Path:
+  SubscriptionTemplateUrl:
     Type: String
-    Description: S3 Bucket + Prefix for subscription objects
+    Description:
 
 Resources:
   SenderStack:
@@ -32,12 +32,15 @@ Resources:
       Parameters:
         LambdaFunctionName: !Ref SenderLambdaName
         ImageUri: !Ref SenderLambdaImageUri
+
   SubscriptionStack:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: !Ref SubscriptionTemplateUrl
       Parameters:
-        VPCId: !Ref VPCId
+        BucketName: !Ref BucketName
+        SubscribeLambdaName: !Ref SubscribeLambdaName
+        UnsubscribeLambdaName: !Ref UnsubscribeLambdaName
 
 # subscribe lambda needs to be rate limited
 
