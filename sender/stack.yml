@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Lambda with EventBridge Rule
+Description: Robonews Sender Stack
 
 Parameters:
   LambdaFunctionName:

@@ -1,5 +1,69 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Description: Robonews Subscription Stack
+
+Parameters:
+  SubscribeLambdaName:
+    Type: String
+    Description: Name of the subscribe lambda
+  UnsubscribeLambdaName:
+    Type: String
+    Description: Name of the unsubscribe lambda
+  SubscriptionS3Path:
+    Type: String
+    Description: S3 Bucket + Prefix for subscription objects
+
 Resources:
+  LambdaExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: LambdaSESPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: Allow
+                  Action:
+                    - "ses:SendEmail"
+                    - "ses:SendRawEmail"
+                    - "ses:SendTemplatedEmail"
+                  Resource: arn:aws:ses:us-east-1:123456789012:identity/kanesweet.com
+
+  SubscribeLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: MyPythonLambdaFunction
+      Handler: lambda_function.lambda_handler # The entry point in your Python code
+      Role: arn:aws:iam::123456789012:role/MyLambdaExecutionRole # ARN of the IAM role for Lambda execution
+      Runtime: python3.11 # Specify the runtime as Python 3.11
+      Code:
+        S3Bucket: my-lambda-code-bucket # The name of the S3 bucket where the .zip file is stored
+        S3Key: lambda-function-code.zip # The key (path) of the code in the S3 bucket
+        MyLambdaFunction:
+
+  UnsubscribeLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: MyPythonLambdaFunction
+      Handler: lambda_function.lambda_handler # The entry point in your Python code
+      Role: arn:aws:iam::123456789012:role/MyLambdaExecutionRole # ARN of the IAM role for Lambda execution
+      Runtime: python3.11 # Specify the runtime as Python 3.11
+      Code:
+        S3Bucket: my-lambda-code-bucket # The name of the S3 bucket where the .zip file is stored
+        S3Key: lambda-function-code.zip # The key (path) of the code in the S3 bucket
+
   UserEmailsTable:
     Type: AWS::DynamoDB::Table
     Properties:

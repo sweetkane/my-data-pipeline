@@ -20,3 +20,5 @@ To create your own RoboNews bot with this repo, you can
   - python
   - langchain
   - plugin architecture
+
+- kanesweet s3 bucket is not managed by cloudformation

@@ -1,4 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Robonews Root Stack
 
+Parameters:
+  BucketName:
+    Type: String
+    Description: Name of the Robonews bucket
+  SenderLambdaName:
+    Type: String
+    Description: Name of the sender lambda
+  SenderLambdaImageUri:
+    Type: String
+    Description: Uri of the sender lambda image
+  SenderTemplateUrl:
+    Type: String
+    Description: Url of the sender stack template
+  SubscribeLambdaName:
+    Type: String
+    Description: Name of the subscribe lambda
+  UnsubscribeLambdaName:
+    Type: String
+    Description: Name of the unsubscribe lambda
+  SubscriptionS3Path:
+    Type: String
+    Description: S3 Bucket + Prefix for subscription objects
+
+Resources:
+  SenderStack:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: !Ref SenderTemplateUrl
+      Parameters:
+        LambdaFunctionName: !Ref SenderLambdaName
+        ImageUri: !Ref SenderLambdaImageUri
+  SubscriptionStack:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: !Ref SubscriptionTemplateUrl
+      Parameters:
+        VPCId: !Ref VPCId
 
 # subscribe lambda needs to be rate limited
 
