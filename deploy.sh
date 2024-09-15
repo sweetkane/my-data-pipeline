@@ -3,6 +3,7 @@
 # Variables
 bucket_name=kanesweet
 stack_name=RobonewsRootStack
+tag=$(uuidgen)
 
 ## Sender
 sender_lambda_name="sender_lambda"
@@ -11,8 +12,10 @@ sender_template_url="$bucket_name/robonews/sender/stack.yml"
 ## Subscription
 subscription_s3_path="$bucket_name/robonews/subscription"
 subscription_template_url="$subscription_s3_path/stack.yml"
+
 subscribe_lambda_name="subscribe_lambda"
 unsubscribe_lambda_name="unsubscribe_lambda"
+
 
 #######################################################################
 
@@ -20,7 +23,7 @@ unsubscribe_lambda_name="unsubscribe_lambda"
 
 # push sender lambda image to ECR
 echo "[deploy.sh] push sender lambda image: STARTING"
-sender_lambda_image_uri=$(./sender/push_lambda.sh $sender_lambda_name)
+sender_lambda_image_uri=$(./sender/push_lambda.sh $sender_lambda_name $tag)
 if [[ $? -ne 0 ]]; then
     echo "[deploy.sh] push sender lambda image: FAILED"
     exit $?
@@ -41,8 +44,8 @@ echo "[deploy.sh] upload sender template to S3: SUCCEEDED"
 
 # upload lambda zips to S3
 echo "[deploy.sh] upload subscription lambdas to S3: STARTING"
-tmp=$(./subscription/push_lambda.sh $subscribe_lambda_name "s3://$subscription_s3_path")
-tmp=$(./subscription/push_lambda.sh $unsubscribe_lambda_name "s3://$subscription_s3_path")
+tmp=$(./subscription/push_lambda.sh "subscribe_lambda" "s3://$subscription_s3_path" "$tag")
+tmp=$(./subscription/push_lambda.sh "unsubscribe_lambda" "s3://$subscription_s3_path" "$tag")
 if [[ $? -ne 0 ]]; then
     echo "[deploy.sh] upload subscription lambdas to S3: FAILED"
     exit $?
@@ -80,7 +83,8 @@ aws cloudformation deploy \
     SenderTemplateUrl="$sender_template_url" \
     SubscribeLambdaName="$subscribe_lambda_name" \
     UnsubscribeLambdaName="$unsubscribe_lambda_name" \
-    SubscriptionTemplateUrl="$subscription_template_url"
+    SubscriptionTemplateUrl="$subscription_template_url" \
+    Tag="$tag"
 if [[ $? -ne 0 ]]; then
     echo "[deploy.sh] deploy stack: FAILED"
     exit $?

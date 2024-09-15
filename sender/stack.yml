@@ -8,6 +8,9 @@ Parameters:
   ImageUri:
     Type: String
     Description: Uri of the docker image containing the lambda function.
+  EncryptionKeyId:
+    Type: String
+    Description: Id of the KMS key used to encrypt/decrypt unsubscribe URLs
 
 Resources:
   LambdaExecutionRole:
@@ -37,6 +40,10 @@ Resources:
                   - "ses:SendRawEmail"
                   - "ses:SendTemplatedEmail"
                 Resource: arn:aws:ses:us-east-1:123456789012:identity/kanesweet.com
+        - PolicyName: LambdaDynamoDBWritePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
               - Effect: "Allow"
                 Action:
                   - "dynamodb:GetItem"
@@ -44,6 +51,15 @@ Resources:
                   - "dynamodb:Query"
                   - "dynamodb:Scan"
                 Resource: !ImportValue UserEmailsTableArn
+        - PolicyName: LambdaKMSPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'kms:Decrypt'
+                  - 'kms:Encrypt'
+                Resource: '*'
 
   SenderLambdaFunction:
     Type: AWS::Lambda::Function
@@ -54,6 +70,10 @@ Resources:
       Code:
         ImageUri: !Ref ImageUri
       Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          KMS_KEY_ID: !Ref EncryptionKeyId
+          UNSUBSCRIBE_LAMBDA_URL: !ImportValue UnsubscribeLambdaUrl
 
   DailyTriggerRule:
     Type: AWS::Events::Rule
@@ -68,8 +88,6 @@ Resources:
               "transforms": ["news_synthesizer"],
               "clients": ["email"]
             }
-
-# TODO add some kind of token generator
 
   PermissionForEventsToInvokeLambda:
     Type: AWS::Lambda::Permission

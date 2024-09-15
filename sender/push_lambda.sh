@@ -31,19 +31,16 @@ fi
 
 ### VARIABLES ###
 
-if [ $# -eq 0 ]; then
-    echo "Usage:    $0 <lambda_name> <repo_name>(optional)"
+if [ $# -ne 2 ]; then
+    echo "Usage:    $0 <lambda_name> <tag>"
     exit 1
 fi
 lambda_name=$1
 
 repo_name="${lambda_name}_repo"
-if [ $# -eq 2 ]; then
-    repo_name=$2
-fi
 
 lambda_tag=latest
-repo_tag=$(uuidgen)
+repo_tag=$2
 
 ### SCRIPT BODY ###
 

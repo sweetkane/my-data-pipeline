@@ -1,5 +1,13 @@
 import json
 
+import boto3
+from botocore.exceptions import ClientError
+
+# Initialize DynamoDB resource
+dynamodb = boto3.resource("dynamodb")
+# Specify your table name
+table = dynamodb.Table("UserEmails")
+
 
 def lambda_handler(event, context):
     # Log the incoming event for debugging
@@ -20,12 +28,20 @@ def lambda_handler(event, context):
             }
 
         # add to dynamodb
+        try:
+            # Add an item to the table
+            table.put_item(Item={"Email": email})
+        except ClientError as e:
+            print(f"Error adding item: {e.response['Error']['Message']}")
+
+            return {
+                "statusCode": 500,
+                "body": json.dumps({"message": "Failed to add email."}),
+            }
 
         return {
             "statusCode": 200,
-            "body": json.dumps(
-                {"message": "Successfully received the email.", "email": email}
-            ),
+            "body": json.dumps({"message": "Sign-up successful!", "email": email}),
         }
 
     except json.JSONDecodeError:

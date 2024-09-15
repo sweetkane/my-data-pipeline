@@ -80,7 +80,7 @@
     event.preventDefault(); // Prevent the default form submission behavior
 
     const email = document.getElementById('email').value;
-    const lambdaUrl = 'https://your-lambda-function-url.amazonaws.com/Prod/signup'; // Replace with your Lambda function URL
+    const lambdaUrl = 'https://vpddkvc5fbs6zp73ssnu6p4tfu0ybllq.lambda-url.us-east-2.on.aws/'; // Replace with your Lambda function URL
 
     try {
       if (!isEmail(email)) {
@@ -98,11 +98,13 @@
 
       const result = await response.json();
 
+      console.log(result)
       // Display success message or handle result
-      document.getElementById('message').textContent = 'Sign-up successful!';
+      document.getElementById('message').textContent = result.message;
+      document.getElementById('message').style.color = "green";
     } catch (error) {
       // Display error message
-      document.getElementById('message').textContent = 'Error: Unable to sign up.';
+      document.getElementById('message').textContent = 'Error communicating to server.';
     }
   });
 </script>

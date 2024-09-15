@@ -11,6 +11,9 @@ Parameters:
   UnsubscribeLambdaName:
     Type: String
     Description: Name of the unsubscribe lambda
+  Tag:
+    Type: String
+    Description: Random UUID tag to force update to lambda code
 
 Resources:
   UserEmailsTable:
@@ -36,7 +39,7 @@ Resources:
                 Service: lambda.amazonaws.com
               Action: sts:AssumeRole
         Policies:
-          - PolicyName: LambdaSESPolicy
+          - PolicyName: LambdaDynamoDBReadPolicy
             PolicyDocument:
               Version: "2012-10-17"
               Statement:
@@ -53,6 +56,15 @@ Resources:
                   - "dynamodb:BatchWriteItem"
                   - "dynamodb:DeleteItem"
                   Resource: !GetAtt UserEmailsTable.Arn
+          - PolicyName: LambdaKMSPolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - 'kms:Decrypt'
+                    - 'kms:Encrypt'
+                  Resource: '*'
 
   SubscribeLambdaFunction:
     Type: AWS::Lambda::Function
@@ -63,7 +75,7 @@ Resources:
       Runtime: python3.11
       Code:
         S3Bucket: !Ref BucketName
-        S3Key: !Sub "robonews/subscription/${SubscribeLambdaName}.zip"
+        S3Key: !Sub "robonews/subscription/${SubscribeLambdaName}-${Tag}.zip"
 
   UnsubscribeLambdaFunction:
     Type: AWS::Lambda::Function
@@ -74,9 +86,49 @@ Resources:
       Runtime: python3.11
       Code:
         S3Bucket: !Ref BucketName
-        S3Key: !Sub "robonews/subscription/${UnsubscribeLambdaName}.zip"
+        S3Key: !Sub "robonews/subscription/${UnsubscribeLambdaName}-${Tag}.zip"
 
-# TODO Add Subscribe and Unsubscribe URL
+  SubscribeLambdaUrl:
+    Type: AWS::Lambda::Url
+    Properties:
+      AuthType: NONE
+      TargetFunctionArn: !GetAtt SubscribeLambdaFunction.Arn
+      Cors:
+        AllowOrigins:
+          - "*"
+        AllowHeaders:
+          - "*"
+        AllowMethods:
+          - "*"
+
+  UnsubscribeLambdaUrl:
+    Type: AWS::Lambda::Url
+    Properties:
+      AuthType: NONE
+      TargetFunctionArn: !GetAtt UnsubscribeLambdaFunction.Arn
+      Cors:
+        AllowOrigins:
+          - "*"
+        AllowHeaders:
+          - "*"
+        AllowMethods:
+          - "*"
+
+  SubscribeUrlPermission:
+     Type: AWS::Lambda::Permission
+     Properties:
+       FunctionName: !Ref SubscribeLambdaFunction
+       FunctionUrlAuthType: 'NONE'
+       Action: lambda:InvokeFunctionUrl
+       Principal: '*'
+
+  UnsubscribeUrlPermission:
+     Type: AWS::Lambda::Permission
+     Properties:
+       FunctionName: !Ref UnsubscribeLambdaFunction
+       FunctionUrlAuthType: 'NONE'
+       Action: lambda:InvokeFunctionUrl
+       Principal: '*'
 
 Outputs:
   UserEmailsTableArn:
@@ -84,3 +136,9 @@ Outputs:
     Value: !GetAtt UserEmailsTable.Arn
     Export:
       Name: UserEmailsTableArn
+
+  UnsubscribeLambdaUrlOutput:
+    Description: "The URL of the unsubscribe function"
+    Value: !GetAtt UnsubscribeLambdaUrl.FunctionUrl
+    Export:
+      Name: UnsubscribeLambdaUrl

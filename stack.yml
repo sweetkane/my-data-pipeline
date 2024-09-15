@@ -23,8 +23,31 @@ Parameters:
   SubscriptionTemplateUrl:
     Type: String
     Description: Url of the subscription template
+  Tag:
+    Type: String
+    Description: Randomly generated unique tag
 
 Resources:
+  SymmetricKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Symmetric encryption key for Robonews app
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowRootAccountAdministration
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+            Action:
+              - 'kms:*'
+            Resource: '*'
+          - Sid: AllowAllKeyAccess
+            Effect: Allow
+            Principal: '*'
+            Action: 'kms:*'
+            Resource: '*'
+
   SubscriptionStack:
     Type: "AWS::CloudFormation::Stack"
     Properties:
@@ -33,6 +56,7 @@ Resources:
         BucketName: !Ref BucketName
         SubscribeLambdaName: !Ref SubscribeLambdaName
         UnsubscribeLambdaName: !Ref UnsubscribeLambdaName
+        Tag: !Ref Tag
 
   SenderStack:
     Type: "AWS::CloudFormation::Stack"
@@ -42,5 +66,6 @@ Resources:
       Parameters:
         LambdaFunctionName: !Ref SenderLambdaName
         ImageUri: !Ref SenderLambdaImageUri
+        EncryptionKeyId: !Ref SymmetricKey
 
 

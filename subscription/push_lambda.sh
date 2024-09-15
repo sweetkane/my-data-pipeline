@@ -13,12 +13,13 @@ fi
 
 ### VARIABLES ###
 
-if [ $# -lt 2 ]; then
-    echo "Usage:    $0 <lambda_name> <s3_path>"
+if [ $# -ne 3 ]; then
+    echo "Usage:    $0 <lambda_name> <s3_path> <tag>"
     exit 1
 fi
 lambda_name=$1
 s3_path=$2
+tag=$3
 
 lambda_tag=latest
 repo_tag=$(uuidgen)
@@ -26,5 +27,5 @@ repo_tag=$(uuidgen)
 ### SCRIPT BODY ###
 
 zip tmp.zip subscription/$lambda_name.py
-aws s3 cp tmp.zip $s3_path/$lambda_name.zip
+aws s3 cp tmp.zip $s3_path/$lambda_name-$tag.zip
 rm tmp.zip

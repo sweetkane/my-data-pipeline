@@ -22,3 +22,4 @@ To create your own RoboNews bot with this repo, you can
   - plugin architecture
 
 - kanesweet s3 bucket is not managed by cloudformation
+- use cors to block traffic from outside s3?

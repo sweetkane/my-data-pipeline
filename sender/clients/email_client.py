@@ -46,6 +46,8 @@ class EmailClient(IClient):
         client = boto3.client("ses", region_name=aws_region)
 
         # Try to send the email.
+
+        # Todo add an unsubscribe link with encrypted email
         try:
             response = client.send_email(
                 Destination={"ToAddresses": recipients},
