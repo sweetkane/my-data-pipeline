@@ -69,6 +69,8 @@ Resources:
               "clients": ["email"]
             }
 
+# TODO add some kind of token generator
+
   PermissionForEventsToInvokeLambda:
     Type: AWS::Lambda::Permission
     Properties:

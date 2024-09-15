@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .signup-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input[type="text"], input[type="submit"] {
+      /* width: 50%; */
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="text"] {
+      width: 67%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .message {
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-container">
+  <h2>Robonews Sign Up</h2>
+  <form id="signupForm">
+    <input type="text" id="email" placeholder="Enter your email" required>
+    <input type="submit" value="Sign Up">
+    <p class="message" id="message"></p>
+  </form>
+</div>
+
+<script>
+
+  function isEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email validation regex
+    return emailRegex.test(email);
+  }
+
+  document.getElementById('signupForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const email = document.getElementById('email').value;
+    const lambdaUrl = 'https://your-lambda-function-url.amazonaws.com/Prod/signup'; // Replace with your Lambda function URL
+
+    try {
+      if (!isEmail(email)) {
+        // Display error message
+        document.getElementById('message').textContent = 'Error: Invalid email address.';
+        return
+    }
+      const response = await fetch(lambdaUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email }) // Send email as part of the request body
+      });
+
+      const result = await response.json();
+
+      // Display success message or handle result
+      document.getElementById('message').textContent = 'Sign-up successful!';
+    } catch (error) {
+      // Display error message
+      document.getElementById('message').textContent = 'Error: Unable to sign up.';
+    }
+  });
+</script>
+
+</body>
+</html>

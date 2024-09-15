@@ -58,7 +58,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: !Ref SubscribeLambdaName
-      Handler: lambda_function.lambda_handler
+      Handler: subscription.subscribe_lambda.lambda_handler
       Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: python3.11
       Code:
@@ -69,12 +69,14 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: !Ref UnsubscribeLambdaName
-      Handler: lambda_function.lambda_handler
+      Handler: subscription.unsubscribe_lambda.lambda_handler
       Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: python3.11
       Code:
         S3Bucket: !Ref BucketName
         S3Key: !Sub "robonews/subscription/${UnsubscribeLambdaName}.zip"
+
+# TODO Add Subscribe and Unsubscribe URL
 
 Outputs:
   UserEmailsTableArn:

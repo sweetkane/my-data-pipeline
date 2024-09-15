@@ -14,8 +14,6 @@ subscription_template_url="$subscription_s3_path/stack.yml"
 subscribe_lambda_name="subscribe_lambda"
 unsubscribe_lambda_name="unsubscribe_lambda"
 
-
-
 #######################################################################
 
 ### Sender ###
