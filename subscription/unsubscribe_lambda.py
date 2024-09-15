@@ -3,39 +3,37 @@ import os
 
 import boto3
 
-# Initialize the KMS client
 kms_client = boto3.client("kms")
+table = boto3.resource("dynamodb").Table("UserEmails")
 
 
 def lambda_handler(event, context):
-    query_params = event.get("queryStringParameters", {})
-    encrypted_email = query_params.get("user")
-
-    if not encrypted_email:
-        return {"statusCode": 400, "body": "No encryptedToken found in the event"}
-
-    # Decode the encrypted token from base64 (assuming it's base64 encoded)
-    encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email)
-
     try:
-        # Decrypt the token using KMS
+        query_params = event.get("queryStringParameters", {})
+
+        print("qsp = ", query_params)
+        encrypted_email = query_params.get("user") + "=="
+
+        if not encrypted_email:
+            return {
+                "statusCode": 400,
+                "body": "No encryptedToken found in the event...",
+            }
+
+        encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email)
         decrypt_response = kms_client.decrypt(CiphertextBlob=encrypted_token_bytes)
-
-        # Get the decrypted value
         decrypted_value = decrypt_response["Plaintext"].decode("utf-8")
-
-        # Store the decrypted value in the variable 'email'
         email = decrypted_value
         print("decoded email = " + email)
 
+        table.delete_item(
+            Key={
+                "primary_key_name": key_value  # Replace 'primary_key_name' with your table's primary key
+            }
+        )
+        # return some html
         return {"statusCode": 200, "body": {"email": email}}
 
-    except kms_client.exceptions.KMSInvalidStateException as e:
-        print(f"KMS Invalid State Exception: {e}")
-        return {"statusCode": 500, "body": "KMS Invalid State Exception"}
-    except kms_client.exceptions.KMSAccessDeniedException as e:
-        print(f"KMS Access Denied Exception: {e}")
-        return {"statusCode": 403, "body": "Access Denied to KMS Key"}
     except Exception as e:
         print(f"Error: {e}")
         return {
