@@ -22,28 +22,25 @@ Parameters:
     Description: Name of the unsubscribe lambda
   SubscriptionTemplateUrl:
     Type: String
-    Description:
+    Description: Url of the subscription template
 
 Resources:
-  SenderStack:
-    Type: "AWS::CloudFormation::Stack"
-    Properties:
-      TemplateURL: !Ref SenderTemplateUrl
-      Parameters:
-        LambdaFunctionName: !Ref SenderLambdaName
-        ImageUri: !Ref SenderLambdaImageUri
-
   SubscriptionStack:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Ref SubscriptionTemplateUrl
+      TemplateURL: !Sub "http://s3.amazonaws.com/${SubscriptionTemplateUrl}"
       Parameters:
         BucketName: !Ref BucketName
         SubscribeLambdaName: !Ref SubscribeLambdaName
         UnsubscribeLambdaName: !Ref UnsubscribeLambdaName
 
-# subscribe lambda needs to be rate limited
+  SenderStack:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: SubscriptionStack
+    Properties:
+      TemplateURL: !Sub "http://s3.amazonaws.com/${SenderTemplateUrl}"
+      Parameters:
+        LambdaFunctionName: !Ref SenderLambdaName
+        ImageUri: !Ref SenderLambdaImageUri
 
-# unsubscribe lambda needs to take in a token
 
-# dynamodb on demand is quite cheap ~ $.25 per month

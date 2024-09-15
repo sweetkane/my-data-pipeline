@@ -13,6 +13,18 @@ Parameters:
     Description: Name of the unsubscribe lambda
 
 Resources:
+  UserEmailsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: UserEmails
+      AttributeDefinitions:
+        - AttributeName: Email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: Email
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
   LambdaExecutionRole:
       Type: AWS::IAM::Role
       Properties:
@@ -34,20 +46,14 @@ Resources:
                     - "logs:CreateLogStream"
                     - "logs:PutLogEvents"
                   Resource: "arn:aws:logs:*:*:*"
-                - Effect: Allow
-                  Action:
-                    - "ses:SendEmail"
-                    - "ses:SendRawEmail"
-                    - "ses:SendTemplatedEmail"
-                  Resource: arn:aws:ses:us-east-1:123456789012:identity/kanesweet.com
                 - Effect: "Allow"
                   Action:
                   - "dynamodb:PutItem"
                   - "dynamodb:UpdateItem"
                   - "dynamodb:BatchWriteItem"
                   - "dynamodb:DeleteItem"
-                  Resource:
-                    - !Ref UserEmailsTableArn
+                  Resource: !GetAtt UserEmailsTable.Arn
+
   SubscribeLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -57,7 +63,7 @@ Resources:
       Runtime: python3.11
       Code:
         S3Bucket: !Ref BucketName
-        S3Key: !Sub "subscription/${SubscribeLambdaName}.zip"
+        S3Key: !Sub "robonews/subscription/${SubscribeLambdaName}.zip"
 
   UnsubscribeLambdaFunction:
     Type: AWS::Lambda::Function
@@ -68,21 +74,7 @@ Resources:
       Runtime: python3.11
       Code:
         S3Bucket: !Ref BucketName
-        S3Key: !Sub "subscription/${UnsubscribeLambdaName}.zip"
-
-  UserEmailsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: UserEmails
-      AttributeDefinitions:
-        - AttributeName: Email
-          AttributeType: S
-        - AttributeName: Name
-          AttributeType: S
-      KeySchema:
-        - AttributeName: Email
-          KeyType: HASH
-      BillingMode: PAY_PER_REQUEST
+        S3Key: !Sub "robonews/subscription/${UnsubscribeLambdaName}.zip"
 
 Outputs:
   UserEmailsTableArn:

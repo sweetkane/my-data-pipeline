@@ -64,6 +64,7 @@ aws ecr get-login-password \
         --username AWS \
         --password-stdin \
         $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com \
+    >/dev/null
 
 #create repo
 repo_uri=$(

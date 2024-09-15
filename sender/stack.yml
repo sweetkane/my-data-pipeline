@@ -8,12 +8,8 @@ Parameters:
   ImageUri:
     Type: String
     Description: Uri of the docker image containing the lambda function.
-  UserEmailsTableArn:
-    Type: String
-    Description: The ARN of the DynamoDB UserEmails table
 
 Resources:
-  # Sender Lambda
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -47,8 +43,8 @@ Resources:
                   - "dynamodb:BatchGetItem"
                   - "dynamodb:Query"
                   - "dynamodb:Scan"
-                Resource:
-                  - !Ref UserEmailsTableArn
+                Resource: !ImportValue UserEmailsTableArn
+
   SenderLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -64,8 +60,8 @@ Resources:
     Properties:
       ScheduleExpression: "cron(0 12 * * ? *)" # Daily at 6am CST
       Targets:
-        - Arn: !GetAtt MyLambdaFunction.Arn
-          Id: MyLambdaFunctionTarget
+        - Arn: !GetAtt SenderLambdaFunction.Arn
+          Id: SenderLambdaFunctionTarget
           Input: |
             {
               "datasources": ["news_now"],
