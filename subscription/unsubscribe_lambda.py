@@ -1,3 +1,4 @@
+import base64
 import os
 
 import boto3
@@ -7,14 +8,14 @@ kms_client = boto3.client("kms")
 
 
 def lambda_handler(event, context):
-    # Retrieve the encrypted token from the event
-    encrypted_email = event.get("user")
+    query_params = event.get("queryStringParameters", {})
+    encrypted_email = query_params.get("user")
 
     if not encrypted_email:
         return {"statusCode": 400, "body": "No encryptedToken found in the event"}
 
     # Decode the encrypted token from base64 (assuming it's base64 encoded)
-    encrypted_token_bytes = bytes.fromhex(encrypted_email)
+    encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email)
 
     try:
         # Decrypt the token using KMS
@@ -25,6 +26,7 @@ def lambda_handler(event, context):
 
         # Store the decrypted value in the variable 'email'
         email = decrypted_value
+        print("decoded email = " + email)
 
         return {"statusCode": 200, "body": {"email": email}}
 

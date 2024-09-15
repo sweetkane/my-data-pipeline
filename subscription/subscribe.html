@@ -98,10 +98,15 @@
 
       const result = await response.json();
 
-      console.log(result)
-      // Display success message or handle result
-      document.getElementById('message').textContent = result.message;
-      document.getElementById('message').style.color = "green";
+      console.log("Sign up result:", result)
+
+      if (response.status == 200) {
+        document.getElementById('message').textContent = "Sign-up successful!";
+        document.getElementById('message').style.color = "green";
+      } else {
+        document.getElementById('message').textContent = "Hmm, something went wrong...";
+      }
+
     } catch (error) {
       // Display error message
       document.getElementById('message').textContent = 'Error communicating to server.';

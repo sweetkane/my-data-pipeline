@@ -1,3 +1,4 @@
+import base64
 import os
 from datetime import date
 
@@ -13,8 +14,9 @@ class EmailClient(IClient):
         self.title = "Good Morning!\n"
         self.subtitle = "Here's your 🤖RoboNews🤖 for the day..."
 
-        self.dynamodb = boto3.resource("dynamodb")
-        self.userEmailsTable = self.dynamodb.Table("UserEmails")
+        self.user_emails_table = self.boto3.resource("dynamodb").Table("UserEmails")
+        self.ses_client = boto3.client("ses")
+        self.kms_client = boto3.client("kms")
 
     def post(self, data: dict):
         """
@@ -22,17 +24,17 @@ class EmailClient(IClient):
         - KEY = Subtitle
         - VALUE = Content for that subtitle
         """
-        self._send_email(
-            sender="robonews@kanesweet.com",
-            recipients=self._get_recipients(),
-            subject=self.subject,
-            body_html=self._to_html(data),
-            aws_region=os.environ["AWS_DEFAULT_REGION"],
-        )
+        for recipient in self._get_recipients():
+            self._send_email(
+                sender="robonews@kanesweet.com",
+                recipient=recipient,
+                subject=self.subject,
+                body_html=self._get_body(data, recipient),
+            )
 
     def _get_recipients(self):
         try:
-            response = self.userEmailsTable.scan()
+            response = self.user_emails_table.scan()
             data = response.get("Items", [])
 
             # Extract and print the emails
@@ -41,16 +43,15 @@ class EmailClient(IClient):
         except Exception as e:
             raise e
 
-    def _send_email(self, sender, recipients, subject, body_html, aws_region):
+    def _send_email(self, sender, recipient, subject, body_html):
         # Create a new SES resource and specify a region.
-        client = boto3.client("ses", region_name=aws_region)
 
         # Try to send the email.
 
         # Todo add an unsubscribe link with encrypted email
         try:
-            response = client.send_email(
-                Destination={"ToAddresses": recipients},
+            response = self.ses_client.send_email(
+                Destination={"ToAddresses": [recipient]},
                 Message={
                     "Body": {
                         "Html": {
@@ -72,7 +73,7 @@ class EmailClient(IClient):
             print("Email sent! Message ID:"),
             print(response["MessageId"])
 
-    def _to_html(self, data: dict):
+    def _get_body(self, data: dict, recipient: str):
         html = f"""
         <html>
         <head></head>
@@ -85,13 +86,27 @@ class EmailClient(IClient):
         for key in data.keys():
             html += f"<h2>{key}</h2>\n"
             html += f"<p>{data[key]}</p>\n"
-        html += """
+        html += f"""
         <hr>
         <br></br>
         <div>That's all... Have a great day!</div>
         <br></br>
+        <a href={self._get_unsubscribe_link(recipient)}>Unsubscribe</a>
         <a href="https://github.com/sweetkane/robonews">GitHub</a>
         </body>
         </html>
         """
         return html
+
+    def _get_unsubscribe_link(self, recipient: str) -> str:
+        kms_key_id = os.environ["KMS_KEY_ID"]
+        unsubscribe_lambda_url = os.environ["UNSUBSCRIBE_LAMBDA_URL"]
+
+        response = self.kms_client.encrypt(
+            KeyId=kms_key_id, Plaintext=recipient.encode("utf-8")
+        )
+        ciphertext = response["CiphertextBlob"]
+
+        base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext)
+
+        return unsubscribe_lambda_url + "?user=" + base64_encoded_ciphertext

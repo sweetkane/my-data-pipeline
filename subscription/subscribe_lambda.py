@@ -3,18 +3,14 @@ import json
 import boto3
 from botocore.exceptions import ClientError
 
-# Initialize DynamoDB resource
-dynamodb = boto3.resource("dynamodb")
-# Specify your table name
-table = dynamodb.Table("UserEmails")
+# DynamoDB table
+table = boto3.resource("dynamodb").Table("UserEmails")
 
 
 def lambda_handler(event, context):
-    # Log the incoming event for debugging
     print("Received event:", json.dumps(event))
 
     try:
-        # Body is expected to be in the event object as a string
         body = json.loads(event.get("body", "{}"))
 
         email = body.get("email", None)
@@ -27,9 +23,7 @@ def lambda_handler(event, context):
                 ),
             }
 
-        # add to dynamodb
         try:
-            # Add an item to the table
             table.put_item(Item={"Email": email})
         except ClientError as e:
             print(f"Error adding item: {e.response['Error']['Message']}")

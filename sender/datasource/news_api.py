@@ -1,9 +1,8 @@
 import os
 from datetime import date, timedelta
 
-from newsapi import NewsApiClient
-
 from datasource._datasource import INewsDatasource
+from newsapi import NewsApiClient
 
 
 class NewsAPI(INewsDatasource):
@@ -28,5 +27,5 @@ class NewsAPI(INewsDatasource):
     def _extract_image_link(self, raw: dict) -> str:
         return raw["urlToImage"]
 
-    def _extract_reference_links(self, raw: dict) -> [str]:
+    def _extract_reference_links(self, raw: dict):
         return raw["url"]

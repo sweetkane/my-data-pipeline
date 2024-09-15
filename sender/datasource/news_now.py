@@ -2,7 +2,6 @@ import os
 from datetime import date, timedelta
 
 import requests
-
 from datasource._datasource import INewsDatasource
 
 
@@ -37,5 +36,5 @@ class NewsNow(INewsDatasource):
     def _extract_image_link(self, raw: dict) -> str:
         return raw["image"]
 
-    def _extract_reference_links(self, raw: dict) -> [str]:
+    def _extract_reference_links(self, raw: dict):
         return [raw["url"]]
