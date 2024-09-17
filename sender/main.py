@@ -1,30 +1,24 @@
 import sys
 
-from clients._client import IClient
-from clients.email_client import EmailClient
-from clients.print_client import PrintClient
 from datasource._datasource import IDatasource
-from datasource.connexun_news import ConnexunNews
-from datasource.news_api import NewsAPI
-from datasource.news_now import NewsNow
+from datasource.nyt import Nyt
+from outputs._output import IOutput
+from outputs.email_output import EmailOutput
+from outputs.print_output import PrintOutput
 from transforms._transform import ITransform
-from transforms.news_synthesizer import NewsSynthesizer
+from transforms.news_summarizer import NewsSummarizer
 
-datasources: dict[str, type[IDatasource]] = {
-    "news_api": NewsAPI,
-    "connexun_news": ConnexunNews,
-    "news_now": NewsNow,
-}
+datasources: dict[str, type[IDatasource]] = {"nyt": Nyt}
 
-transforms: dict[str, type[ITransform]] = {"news_synthesizer": NewsSynthesizer}
+transforms: dict[str, type[ITransform]] = {"news_summarizer": NewsSummarizer}
 
-clients: dict[str, type[IClient]] = {"email": EmailClient, "print": PrintClient}
+outputs: dict[str, type[IOutput]] = {"email": EmailOutput, "print": PrintOutput}
 
 
-def handler(event, context):
+def lambda_handler(event, context):
     datasource_keys = event["datasources"]
-    transform_keys = event["transforms"]
-    client_keys = event["clients"]
+    transform_key = event["transform"]
+    output_keys = event["outputs"]
 
     data = []
     try:
@@ -32,42 +26,60 @@ def handler(event, context):
             datasource = datasources[key]()
             data += datasource.get()
     except Exception as e:
-        return f"""
+        print(
+            f"""
         Failed to get from datasource
         -----------------------------
         e: {e}
         """
+        )
+        return {
+            "statusCode": 500,
+            "body": e,
+        }
     try:
-        for key in transform_keys:
-            transform = transforms[key]()
-            data = transform.apply(data)
+        transform = transforms[transform_key]()
+        content = transform.apply(data)
     except Exception as e:
-        return f"""
-        Failed to apply transforms
+        print(
+            f"""
+        Failed to apply transform
         --------------------------
         e: {e}
         """
+        )
+        return {
+            "statusCode": 500,
+            "body": e,
+        }
     try:
-        for key in client_keys:
-            client = clients[key]()
-            client.post(data)
+        for key in output_keys:
+            output = outputs[key]()
+            output.post(content)
     except Exception as e:
-        return f"""
-        Failed to post to client
+        print(
+            f"""
+        Failed to post to output
         ------------------------
         e: {e}
         """
+        )
+        return {
+            "statusCode": 500,
+            "body": e,
+        }
 
+    print("Ran the lambda")
     return "Finished successfully"
 
 
 if __name__ == "__main__":
     sys.exit(
-        handler(
+        lambda_handler(
             {
-                "datasources": ["news_now"],
-                "transforms": ["news_synthesizer"],
-                "clients": ["print", "email"],
+                "datasources": ["nyt"],
+                "transform": "news_summarizer",
+                "outputs": ["print", "email"],
             },
             {},
         )

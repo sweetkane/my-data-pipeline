@@ -2,3 +2,4 @@ newsapi-python >= 0.2.7
 boto3
 langchain
 langchain-openai
+feedparser

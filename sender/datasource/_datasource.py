@@ -15,13 +15,12 @@ class INewsDatasource(IDatasource):
         self.since_date = since_date
 
     def get(self) -> dict:
-
         articles = self._get_articles()
-        articles = self._filter_date(articles)
+        articles = self._filter(articles)
         res = []
         for article in articles:
             obj = {}
-            obj["date"] = self._extract_datetime(article).date().strftime("%Y-%m-%d")
+            obj["date"] = self._extract_date(article)
             obj["headline"] = self._extract_headline(article)
             obj["content"] = self._extract_content(article)
             obj["image_link"] = self._extract_image_link(article)
@@ -41,23 +40,11 @@ class INewsDatasource(IDatasource):
     def _extract_image_link(self, raw: dict) -> str:
         pass
 
-    def _extract_reference_links(self, raw: dict) -> [str]:
+    def _extract_reference_links(self, raw: dict) -> list:
         pass
 
-    def _extract_datetime(self, raw: dict) -> datetime:
-        if not self.date_key or not self.date_format:
-            raise Exception("Need to set date_key and date_format!")
+    def _extract_date(self, raw: dict) -> str:
+        pass
 
-        article_datetime = raw[self.date_key]
-        article_datetime = datetime.strptime(article_datetime, self.date_format)
-        return article_datetime
-
-    def _filter_date(self, articles: [dict]):
-        to_remove = []
-        for i in range(len(articles)):
-            article_datetime = self._extract_datetime(articles[i])
-            if article_datetime.date() < self.since_date:
-                to_remove.append(i)
-        for i in reversed(to_remove):
-            articles = articles[:i] + articles[i + 1 :]
-        return articles
+    def _filter(self, articles: list):
+        pass

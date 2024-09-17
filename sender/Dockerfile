@@ -14,4 +14,4 @@ RUN pip install -r ${LAMBDA_TASK_ROOT}/requirements.txt
 
 ENV PYTHONPATH "${PYTHONPATH}:${LAMBDA_TASK_ROOT}"
 
-CMD [ "main.handler" ]
+CMD [ "main.lambda_handler" ]

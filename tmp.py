@@ -10,7 +10,7 @@ unsubscribe_lambda_url = (
     "https://cfq63ce57k2xekjgvbr4hon5ka0egwgd.lambda-url.us-east-2.on.aws/"
 )
 
-recipient = "test@test.test"
+recipient = "kanesweet11@gmail.com"
 
 response = kms_client.encrypt(KeyId=kms_key_id, Plaintext=recipient.encode("utf-8"))
 ciphertext = response["CiphertextBlob"]

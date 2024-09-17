@@ -1,3 +1,3 @@
 class ITransform:
-    def apply(self, data: dict) -> dict:
+    def apply(self, data: list) -> str:
         pass

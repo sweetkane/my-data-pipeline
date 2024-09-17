@@ -39,7 +39,7 @@ Resources:
                   - "ses:SendEmail"
                   - "ses:SendRawEmail"
                   - "ses:SendTemplatedEmail"
-                Resource: arn:aws:ses:us-east-1:123456789012:identity/kanesweet.com
+                Resource: "*"
         - PolicyName: LambdaDynamoDBWritePolicy
           PolicyDocument:
             Version: "2012-10-17"
@@ -84,9 +84,9 @@ Resources:
           Id: SenderLambdaFunctionTarget
           Input: |
             {
-              "datasources": ["news_now"],
-              "transforms": ["news_synthesizer"],
-              "clients": ["email"]
+              "datasources": ["nyt"],
+              "transform": "news_summarizer",
+              "clients": ["print, email"]
             }
 
   PermissionForEventsToInvokeLambda:

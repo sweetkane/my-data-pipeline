@@ -3,22 +3,21 @@ import os
 from datetime import date
 
 import boto3
-from botocore.exceptions import ClientError
-from clients._client import IClient
+from outputs._output import IOutput
 
 
-class EmailClient(IClient):
+class EmailOutput(IOutput):
     def __init__(self) -> None:
         super().__init__()
         self.subject = f"🤖RoboNews🤖: {date.today().strftime('%a, %b %-d %Y')}"
         self.title = "Good Morning!\n"
         self.subtitle = "Here's your 🤖RoboNews🤖 for the day..."
 
-        self.user_emails_table = self.boto3.resource("dynamodb").Table("UserEmails")
+        self.user_emails_table = boto3.resource("dynamodb").Table("UserEmails")
         self.ses_client = boto3.client("ses")
         self.kms_client = boto3.client("kms")
 
-    def post(self, data: dict):
+    def post(self, content: str):
         """
         data should be a dict with
         - KEY = Subtitle
@@ -29,7 +28,7 @@ class EmailClient(IClient):
                 sender="robonews@kanesweet.com",
                 recipient=recipient,
                 subject=self.subject,
-                body_html=self._get_body(data, recipient),
+                body_html=self._get_body(content, recipient),
             )
 
     def _get_recipients(self):
@@ -66,14 +65,14 @@ class EmailClient(IClient):
                 },
                 Source=sender,
             )
-        except ClientError as e:
+        except Exception as e:
             print(e.response["Error"]["Message"])
             raise e
         else:
             print("Email sent! Message ID:"),
             print(response["MessageId"])
 
-    def _get_body(self, data: dict, recipient: str):
+    def _get_body(self, content: str, recipient: str):
         html = f"""
         <html>
         <head></head>
@@ -82,12 +81,7 @@ class EmailClient(IClient):
         <div>{self.subtitle}</div>
         <br></br>
         <hr>
-        """
-        for key in data.keys():
-            html += f"<h2>{key}</h2>\n"
-            html += f"<p>{data[key]}</p>\n"
-        html += f"""
-        <hr>
+        <p>{content}</p>
         <br></br>
         <div>That's all... Have a great day!</div>
         <br></br>
@@ -107,6 +101,8 @@ class EmailClient(IClient):
         )
         ciphertext = response["CiphertextBlob"]
 
-        base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext)
+        base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext).decode(
+            "utf-8"
+        )[:-2]
 
         return unsubscribe_lambda_url + "?user=" + base64_encoded_ciphertext
