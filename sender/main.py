@@ -69,7 +69,7 @@ def lambda_handler(event, context):
             "body": e,
         }
 
-    print("Ran the lambda")
+    print("Finished successfully")
     return "Finished successfully"
 
 

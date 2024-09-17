@@ -14,8 +14,16 @@ recipient = "kanesweet11@gmail.com"
 
 response = kms_client.encrypt(KeyId=kms_key_id, Plaintext=recipient.encode("utf-8"))
 ciphertext = response["CiphertextBlob"]
+print(f"ciphertext = \n{ciphertext}\n")
+encrypted_email = base64.urlsafe_b64encode(ciphertext).decode("utf-8")[:-1]
+print(f"encrypted_email = \n{encrypted_email}\n")
 
-base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext).decode("utf-8")
+url = unsubscribe_lambda_url + "?user=" + encrypted_email
+# print(url)
 
-url = unsubscribe_lambda_url + "?user=" + base64_encoded_ciphertext
-print(url[:-2])
+encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email + "=")
+print(f"encrypted_token_bytes = \n{encrypted_token_bytes}\n")
+decrypt_response = kms_client.decrypt(CiphertextBlob=encrypted_token_bytes)
+print("decrypt_response = ", decrypt_response)
+email = decrypt_response["Plaintext"].decode("utf-8")
+print("decrypted email = " + email)

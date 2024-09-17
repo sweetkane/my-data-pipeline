@@ -9,8 +9,8 @@ table = boto3.resource("dynamodb").Table("UserEmails")
 def lambda_handler(event, context):
     try:
         query_params = event.get("queryStringParameters", {})
+        print("query_params = ", query_params)
         encrypted_email = query_params.get("user")
-
         print("encrypted email = ", encrypted_email)
 
         if not encrypted_email:
@@ -19,11 +19,13 @@ def lambda_handler(event, context):
                 "body": "No encryptedToken found in the event...",
             }
 
-        encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email + "==")
+        encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email + "=")
+        print("encrypted_token_bytes = ", encrypted_token_bytes)
         decrypt_response = kms_client.decrypt(CiphertextBlob=encrypted_token_bytes)
-        decrypted_value = decrypt_response["Plaintext"].decode("utf-8")
-        email = decrypted_value
-        print("decoded email = " + email)
+        print("decrypt_response = ", decrypt_response)
+        email = decrypt_response["Plaintext"].decode("utf-8")
+        print("decrypted email = " + email)
+
     except Exception as e:
         print(f"Error: {e}")
         return {

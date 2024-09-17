@@ -69,8 +69,7 @@ class EmailOutput(IOutput):
             print(e.response["Error"]["Message"])
             raise e
         else:
-            print("Email sent! Message ID:"),
-            print(response["MessageId"])
+            print(f"Email sent to {recipient}!"),
 
     def _get_body(self, content: str, recipient: str):
         html = f"""
@@ -101,8 +100,7 @@ class EmailOutput(IOutput):
         )
         ciphertext = response["CiphertextBlob"]
 
-        base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext).decode(
-            "utf-8"
-        )[:-2]
+        base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext)
+        utf_cypher = base64_encoded_ciphertext.decode("utf-8")[:-1]
 
-        return unsubscribe_lambda_url + "?user=" + base64_encoded_ciphertext
+        return unsubscribe_lambda_url + "?user=" + utf_cypher
