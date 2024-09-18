@@ -16,6 +16,18 @@ Parameters:
     Description: Random UUID tag to force update to lambda code
 
 Resources:
+  SubscriptionPageAccessPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref BucketName
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::kanesweet.com/*"
+
   UserEmailsTable:
     Type: AWS::DynamoDB::Table
     Properties:

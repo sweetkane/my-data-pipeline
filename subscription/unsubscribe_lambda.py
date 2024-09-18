@@ -35,7 +35,22 @@ def lambda_handler(event, context):
     try:
         table.delete_item(Key={"Email": email})
         # return some html
-        return {"statusCode": 200, "body": {"email": email}}
+        html_content = """
+        <html>
+            <head>
+                <title>Subscription Status</title>
+            </head>
+            <body>
+                <h1>You have unsuccessfully subscribed from Robonews</h1>
+            </body>
+        </html>
+        """
+
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "text/html"},
+            "body": html_content,
+        }
     except Exception as e:
         print(f"Error: {e}")
         return {

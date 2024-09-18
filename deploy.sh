@@ -41,6 +41,8 @@ echo "[deploy.sh] upload sender template to S3: SUCCEEDED"
 
 
 ### Subscription ###
+# clear existing items
+aws s3 rm s3://$subscription_s3_path/ --recursive
 
 # upload lambda zips to S3
 echo "[deploy.sh] upload subscription lambdas to S3: STARTING"
@@ -54,7 +56,7 @@ echo "[deploy.sh] upload subscription lambdas to S3: SUCCEEDED"
 
 # upload html to S3
 echo "[deploy.sh] upload html to S3: STARTING"
-aws s3 cp subscription/subscribe.html "s3://$subscription_s3_path/subscribe.html"
+aws s3 cp subscription/subscribe.html "s3://kanesweet.com/robonews/index.html"
 if [[ $? -ne 0 ]]; then
     echo "[deploy.sh] upload html to S3: FAILED"
     exit $?
