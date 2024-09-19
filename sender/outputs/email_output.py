@@ -11,7 +11,7 @@ class EmailOutput(IOutput):
         super().__init__()
         self.subject = f"🤖RoboNews🤖: {date.today().strftime('%a, %b %-d %Y')}"
         self.title = "Good Morning!\n"
-        self.subtitle = "Here's your 🤖RoboNews🤖 for the day..."
+        self.subtitle = "Here's your 🤖RoboNews🤖 for the week..."
 
         self.user_emails_table = boto3.resource("dynamodb").Table("UserEmails")
         self.ses_client = boto3.client("ses")
