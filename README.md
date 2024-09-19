@@ -1,7 +1,7 @@
 # 🤖RoboNews🤖
 RoboNews is a cloud native email newsletter that delivers weekly news about AI and LLMs, written by an LLM!
 
-[![Sponsor on GitHub](https://gist.github.com/cxmeel/0dbc95191f239b631c3874f4ccf114e2/raw/github_sponsor-compact.svg)](https://github.com/sponsors/cxmeel) [![View Itch.io Store](https://gist.github.com/cxmeel/0dbc95191f239b631c3874f4ccf114e2/raw/itch-compact.svg)](https://cxmeel.itch.io)
+[Subscribe](https://kanesweet.com/robonews/subscribe)
 
 ### Create your own
 To create your own RoboNews bot with this repo, you can
