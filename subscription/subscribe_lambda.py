@@ -11,9 +11,9 @@ def lambda_handler(event, context):
     print("Received event:", json.dumps(event))
 
     try:
-        body = json.loads(event.get("body", "{}"))
-
-        email = body.get("email", None)
+        query_params = event.get("queryStringParameters", {})
+        print("query_params = ", query_params)
+        email = query_params.get("user")
 
         if not email:
             return {
@@ -33,9 +33,22 @@ def lambda_handler(event, context):
                 "body": json.dumps({"message": "Failed to add email."}),
             }
 
+        html_content = """
+        <html>
+            <head>
+                <title>Subscription Status</title>
+            </head>
+            <body>
+                <h1>You have successfully subscribed to Robonews!</h1>
+                <p>Expect new content every Monday morning :)</p>
+            </body>
+        </html>
+        """
+
         return {
             "statusCode": 200,
-            "body": json.dumps({"message": "Sign-up successful!", "email": email}),
+            "headers": {"Content-Type": "text/html"},
+            "body": html_content,
         }
 
     except json.JSONDecodeError:

@@ -14,6 +14,9 @@ Parameters:
   SenderTemplateUrl:
     Type: String
     Description: Url of the sender stack template
+  ConfirmLambdaName:
+    Type: String
+    Description: Name of the confirmation lambda
   SubscribeLambdaName:
     Type: String
     Description: Name of the subscribe lambda
@@ -54,6 +57,7 @@ Resources:
       TemplateURL: !Sub "http://s3.amazonaws.com/${SubscriptionTemplateUrl}"
       Parameters:
         BucketName: !Ref BucketName
+        ConfirmLambdaName: !Ref ConfirmLambdaName
         SubscribeLambdaName: !Ref SubscribeLambdaName
         UnsubscribeLambdaName: !Ref UnsubscribeLambdaName
         Tag: !Ref Tag

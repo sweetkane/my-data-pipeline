@@ -22,6 +22,14 @@
       width: 300px;
     }
 
+    .description-text {
+      text-align: center;
+      color: #4a4a4a; /* Dark grey */
+      font-size: 16px; /* Adjust as needed */
+      line-height: 1.6; /* Improves readability */
+      font-family: Arial, sans-serif; /* Choose a clean font */
+    }
+
     h2 {
       text-align: center;
     }
@@ -62,6 +70,7 @@
 
 <div class="signup-container">
   <h2>Robonews Sign Up</h2>
+  <p class="description-text">Robonews is a weekly newsletter delivered right to your email inbox with the latest news on AI and LLMs. It's also written by an LLM... And it's free!</p>
   <form id="signupForm">
     <input type="text" id="email" placeholder="Enter your email" required>
     <input type="submit" value="Sign Up">
@@ -80,7 +89,7 @@
     event.preventDefault(); // Prevent the default form submission behavior
 
     const email = document.getElementById('email').value;
-    const lambdaUrl = 'https://bkkdqrmnuysagnm3fhyizqnsq40tpoum.lambda-url.us-east-2.on.aws/';
+    const lambdaUrl = 'https://qcpadwf4cpr2zwydjp6n24tcfy0muula.lambda-url.us-east-2.on.aws/';
 
     try {
       if (!isEmail(email)) {
@@ -101,7 +110,7 @@
       console.log("Sign up result:", result)
 
       if (response.status == 200) {
-        document.getElementById('message').textContent = "Sign-up successful!";
+        document.getElementById('message').textContent = "Confirmation email sent! (You may have to check your spam folder)";
         document.getElementById('message').style.color = "green";
       } else {
         document.getElementById('message').textContent = "Hmm, something went wrong...";

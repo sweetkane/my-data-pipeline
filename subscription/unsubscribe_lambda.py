@@ -41,7 +41,7 @@ def lambda_handler(event, context):
                 <title>Subscription Status</title>
             </head>
             <body>
-                <h1>You have unsuccessfully subscribed from Robonews</h1>
+                <h1>You have successfully unsubscribed from Robonews</h1>
             </body>
         </html>
         """

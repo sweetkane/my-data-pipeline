@@ -13,9 +13,9 @@ sender_template_url="$bucket_name/robonews/sender/stack.yml"
 subscription_s3_path="$bucket_name/robonews/subscription"
 subscription_template_url="$subscription_s3_path/stack.yml"
 
+confirm_lambda_name="confirm_lambda"
 subscribe_lambda_name="subscribe_lambda"
 unsubscribe_lambda_name="unsubscribe_lambda"
-
 
 #######################################################################
 
@@ -46,6 +46,7 @@ aws s3 rm s3://$subscription_s3_path/ --recursive
 
 # upload lambda zips to S3
 echo "[deploy.sh] upload subscription lambdas to S3: STARTING"
+tmp=$(./subscription/push_lambda.sh "confirm_lambda" "s3://$subscription_s3_path" "$tag")
 tmp=$(./subscription/push_lambda.sh "subscribe_lambda" "s3://$subscription_s3_path" "$tag")
 tmp=$(./subscription/push_lambda.sh "unsubscribe_lambda" "s3://$subscription_s3_path" "$tag")
 if [[ $? -ne 0 ]]; then
@@ -83,6 +84,7 @@ aws cloudformation deploy \
     SenderLambdaName="$sender_lambda_name" \
     SenderLambdaImageUri="$sender_lambda_image_uri" \
     SenderTemplateUrl="$sender_template_url" \
+    ConfirmLambdaName="$confirm_lambda_name" \
     SubscribeLambdaName="$subscribe_lambda_name" \
     UnsubscribeLambdaName="$unsubscribe_lambda_name" \
     SubscriptionTemplateUrl="$subscription_template_url" \

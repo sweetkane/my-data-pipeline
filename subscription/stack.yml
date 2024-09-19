@@ -5,6 +5,9 @@ Parameters:
   BucketName:
     Type: String
     Description: Name of the Robonews bucket
+  ConfirmLambdaName:
+    Type: String
+    Description: Name of the confirmation lambda
   SubscribeLambdaName:
     Type: String
     Description: Name of the subscribe lambda
@@ -16,18 +19,6 @@ Parameters:
     Description: Random UUID tag to force update to lambda code
 
 Resources:
-  SubscriptionPageAccessPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref BucketName
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: "s3:GetObject"
-            Resource: !Sub "arn:aws:s3:::kanesweet.com/*"
-
   UserEmailsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -51,6 +42,22 @@ Resources:
                 Service: lambda.amazonaws.com
               Action: sts:AssumeRole
         Policies:
+          - PolicyName: LambdaSESPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: Allow
+                  Action:
+                    - "ses:SendEmail"
+                    - "ses:SendRawEmail"
+                    - "ses:SendTemplatedEmail"
+                  Resource: "*"
           - PolicyName: LambdaDynamoDBReadPolicy
             PolicyDocument:
               Version: "2012-10-17"
@@ -78,6 +85,20 @@ Resources:
                     - 'kms:Encrypt'
                   Resource: '*'
 
+  ConfirmLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref ConfirmLambdaName
+      Handler: subscription.confirm_lambda.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.11
+      Code:
+        S3Bucket: !Ref BucketName
+        S3Key: !Sub "robonews/subscription/${ConfirmLambdaName}-${Tag}.zip"
+      Environment:
+        Variables:
+          SUBSCRIBE_LAMBDA_URL: !GetAtt SubscribeLambdaUrl.FunctionUrl
+
   SubscribeLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -99,6 +120,19 @@ Resources:
       Code:
         S3Bucket: !Ref BucketName
         S3Key: !Sub "robonews/subscription/${UnsubscribeLambdaName}-${Tag}.zip"
+
+  ConfirmLambdaUrl:
+    Type: AWS::Lambda::Url
+    Properties:
+      AuthType: NONE
+      TargetFunctionArn: !GetAtt ConfirmLambdaFunction.Arn
+      Cors:
+        AllowOrigins:
+          - "*"
+        AllowHeaders:
+          - "*"
+        AllowMethods:
+          - "*"
 
   SubscribeLambdaUrl:
     Type: AWS::Lambda::Url
@@ -125,6 +159,14 @@ Resources:
           - "*"
         AllowMethods:
           - "*"
+
+  ConfirmUrlPermission:
+     Type: AWS::Lambda::Permission
+     Properties:
+       FunctionName: !Ref ConfirmLambdaFunction
+       FunctionUrlAuthType: 'NONE'
+       Action: lambda:InvokeFunctionUrl
+       Principal: '*'
 
   SubscribeUrlPermission:
      Type: AWS::Lambda::Permission
