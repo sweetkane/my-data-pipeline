@@ -86,7 +86,7 @@ Resources:
             {
               "datasources": ["nyt"],
               "transform": "news_summarizer",
-              "outputs": ["print, email"]
+              "outputs": ["print", "email"]
             }
 
   PermissionForEventsToInvokeLambda:
