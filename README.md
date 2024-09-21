@@ -12,8 +12,8 @@ RoboNews is a serverless email newsletter that delivers weekly news about AI and
   - Unsubscribe button uses signed URLs so users can only unsubscribe their own account
   - URLs are encrypted/decrypted with KMS
 - Containerized Lambda
-  - Newsletter is sent by a lambda function which
-    - Is defined in an ECS container which handles dependencies
-      - (If I were to do it again I would use S3 and lambda layers tbh)
-    - Is triggered by an EventBridge cron job
-    - Gets headlines from RSS feeds, and then summarizes them with Langchain-OpenAI
+  - Newsletter is sent by a lambda function in an ECS container
+    - (If I were to do it again I would use S3 and lambda layers tbh)
+  - Lambda is triggered by an EventBridge cron job
+  - Source code uses a "plugin" architecture making it easy to add news sources and output types
+  - Gets headlines from RSS feeds, and then summarizes them with Langchain-OpenAI

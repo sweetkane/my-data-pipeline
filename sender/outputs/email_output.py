@@ -82,9 +82,9 @@ class EmailOutput(IOutput):
         <hr>
         <p>{content}</p>
         <br></br>
-        <div>That's all... Have a great day!</div>
+        <div>That's all for now... Have a great week!</div>
         <br></br>
-        <a href={self._get_unsubscribe_link(recipient)}>Unsubscribe</a>
+        <a href={self._get_unsubscribe_link(recipient)}>Unsubscribe</a> |
         <a href="https://github.com/sweetkane/robonews">GitHub</a>
         </body>
         </html>
