@@ -4,8 +4,8 @@ RoboNews is a serverless email newsletter that delivers weekly news about AI and
 ## Technical details
 - Uses a LOT of AWS services
   - Cloudformation, Lambda, S3, DynamoDB, EventBridge, KMS, SES, ECS, Route 53, Cloudfront
-- Serverless website design
-  - Subscription page uses S3, Cloudfront with SSL, and Route 53 to create a serverless website with HTTPS
+- Serverless design
+  - Subscription page uses S3, Cloudfront, Certificate Manager, and Route 53 to create a serverless website with HTTPS
 - Signed URLs
   - Unsubscribe button uses signed URLs so users can only unsubscribe their own account
   - URLs are encrypted/decrypted with KMS

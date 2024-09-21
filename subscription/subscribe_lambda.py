@@ -39,8 +39,8 @@ def lambda_handler(event, context):
                 <title>Subscription Status</title>
             </head>
             <body>
-                <h1>You have successfully subscribed to Robonews!</h1>
-                <p>Expect new content every Monday morning :)</p>
+                <h1>You have successfully subscribed to RoboNews!</h1>
+                <p>Check your inbox for new content every week 🤖</p>
             </body>
         </html>
         """
