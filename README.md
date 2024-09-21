@@ -7,7 +7,7 @@ RoboNews is a serverless email newsletter that delivers weekly news about AI and
 - Serverless design
   - Subscription page uses S3, Cloudfront, Certificate Manager, and Route 53 to create a serverless website with HTTPS
 - One-Click Deployment
-  - The project includes a deployment script which uses the AWS CLI to push source code to ECS and S3, and then deploys the Cloudformation template, so that almost any change to the project can be shipped with the same command
+  - The project includes a deployment script which uses the AWS CLI to push source code to ECS and S3, and then deploys the Cloudformation template
   - If I were to do it again I'd probably use CDK instead of the CLI
   - A future addition could be a CI/CD pipeline that automatically deploys changes when they're pushed to origin
 - Signed URLs
