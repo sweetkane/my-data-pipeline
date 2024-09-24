@@ -11,7 +11,7 @@ RoboNews is a serverless email newsletter that delivers weekly news about AI and
   - If I were to do it again I'd probably use CDK instead of the CLI
   - A future addition could be a CI/CD pipeline that automatically deploys changes when they're pushed to origin
 - Signed URLs
-  - Confirm-Email & Unsubscribe buttons use signed URLs so users can only subscribe & unsubscribe their own account
+  - Confirm-Email & Unsubscribe buttons use signed URLs so users can only manage their own account
   - URLs are encrypted/decrypted with KMS
 - Containerized Lambda
   - Newsletter is sent by a lambda function in an ECS container
