@@ -78,7 +78,7 @@ Resources:
   DailyTriggerRule:
     Type: AWS::Events::Rule
     Properties:
-      ScheduleExpression: "cron(0 12 ? * 4 *)" # Daily at 6am CST
+      ScheduleExpression: "cron(0 12 ? * 4 *)" # Weekly at 6am CST
       Targets:
         - Arn: !GetAtt SenderLambdaFunction.Arn
           Id: SenderLambdaFunctionTarget
