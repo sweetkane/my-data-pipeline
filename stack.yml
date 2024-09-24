@@ -60,6 +60,7 @@ Resources:
         ConfirmLambdaName: !Ref ConfirmLambdaName
         SubscribeLambdaName: !Ref SubscribeLambdaName
         UnsubscribeLambdaName: !Ref UnsubscribeLambdaName
+        EncryptionKeyId: !Ref SymmetricKey
         Tag: !Ref Tag
 
   SenderStack:

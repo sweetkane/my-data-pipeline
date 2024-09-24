@@ -14,6 +14,9 @@ Parameters:
   UnsubscribeLambdaName:
     Type: String
     Description: Name of the unsubscribe lambda
+  EncryptionKeyId:
+    Type: String
+    Description: Id of the KMS key used to encrypt/decrypt unsubscribe URLs
   Tag:
     Type: String
     Description: Random UUID tag to force update to lambda code
@@ -97,6 +100,7 @@ Resources:
         S3Key: !Sub "robonews/subscription/${ConfirmLambdaName}-${Tag}.zip"
       Environment:
         Variables:
+          KMS_KEY_ID: !Ref EncryptionKeyId
           SUBSCRIBE_LAMBDA_URL: !GetAtt SubscribeLambdaUrl.FunctionUrl
 
   SubscribeLambdaFunction:
