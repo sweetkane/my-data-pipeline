@@ -9,7 +9,7 @@ RoboNews is a serverless email newsletter that delivers weekly news about AI and
 - One-Click Deployment
   - The project includes a deployment script which uses the AWS CLI to push source code to ECS and S3, and then deploys the Cloudformation template
   - If I were to do it again I'd probably use CDK instead of the CLI
-  - A future addition could be a CI/CD pipeline that automatically deploys changes when they're pushed to origin
+  - A future addition that I decided was out of scope for now is a CI/CD pipeline that automatically deploys changes when they're pushed to origin
 - Signed URLs
   - Confirm-Email & Unsubscribe buttons use signed URLs so users can only manage their own account
   - URLs are encrypted/decrypted with KMS
