@@ -88,7 +88,9 @@ aws cloudformation deploy \
     SubscribeLambdaName="$subscribe_lambda_name" \
     UnsubscribeLambdaName="$unsubscribe_lambda_name" \
     SubscriptionTemplateUrl="$subscription_template_url" \
-    Tag="$tag"
+    Tag="$tag" \
+    MailgunApiKey="$MAILGUN_API_KEY"
+
 if [[ $? -ne 0 ]]; then
     echo "[deploy.sh] deploy stack: FAILED"
     exit $?

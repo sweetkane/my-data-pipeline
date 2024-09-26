@@ -11,6 +11,9 @@ Parameters:
   EncryptionKeyId:
     Type: String
     Description: Id of the KMS key used to encrypt/decrypt unsubscribe URLs
+  MailgunApiKey:
+    Type: String
+    Description: API key for mailgun email service
 
 Resources:
   LambdaExecutionRole:
@@ -72,6 +75,7 @@ Resources:
       Role: !GetAtt LambdaExecutionRole.Arn
       Environment:
         Variables:
+          MAILGUN_API_KEY: !Ref MailgunApiKey
           KMS_KEY_ID: !Ref EncryptionKeyId
           UNSUBSCRIBE_LAMBDA_URL: !ImportValue UnsubscribeLambdaUrl
 

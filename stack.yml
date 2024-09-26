@@ -29,6 +29,9 @@ Parameters:
   Tag:
     Type: String
     Description: Randomly generated unique tag
+  MailgunApiKey:
+    Type: String
+    Description: API key for mailgun email service
 
 Resources:
   SymmetricKey:
@@ -62,6 +65,7 @@ Resources:
         UnsubscribeLambdaName: !Ref UnsubscribeLambdaName
         EncryptionKeyId: !Ref SymmetricKey
         Tag: !Ref Tag
+        MailgunApiKey: !Ref MailgunApiKey
 
   SenderStack:
     Type: "AWS::CloudFormation::Stack"
@@ -72,5 +76,6 @@ Resources:
         LambdaFunctionName: !Ref SenderLambdaName
         ImageUri: !Ref SenderLambdaImageUri
         EncryptionKeyId: !Ref SymmetricKey
+        MailgunApiKey: !Ref MailgunApiKey
 
 

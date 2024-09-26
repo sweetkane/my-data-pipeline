@@ -1,14 +1,40 @@
 import base64
 import json
 import os
+import urllib.parse
+import urllib.request
 
 import boto3
-from botocore.exceptions import ClientError
 
 # DynamoDB table
-ses_client = boto3.client("ses")
 kms_client = boto3.client("kms")
 sender = "robonews@kanesweet.com"
+
+
+def send_email(sender, recipient, subject, html):
+    url = "https://api.mailgun.net/v3/kanesweet.com/messages"
+
+    data = urllib.parse.urlencode(
+        {
+            "from": f"RoboNews <{sender}>",
+            "to": recipient,
+            "subject": subject,
+            "html": html,
+        }
+    ).encode()
+
+    api_key = os.environ["MAILGUN_API_KEY"]
+    auth = f"api:{api_key}".encode("ascii")
+    auth_header = base64.b64encode(auth).decode("ascii")
+
+    request = urllib.request.Request(url, data=data)
+    request.add_header("Authorization", f"Basic {auth_header}")
+
+    try:
+        with urllib.request.urlopen(request) as response:
+            return response.read().decode()
+    except urllib.error.HTTPError as e:
+        raise Exception(f"Error: {e.read().decode()}")
 
 
 def get_subscribe_link(recipient: str) -> str:
@@ -45,29 +71,16 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "Invalid JSON in the request body."}),
         }
 
-    ses_client.send_email(
-        Destination={"ToAddresses": [email]},
-        Message={
-            "Body": {
-                "Html": {
-                    "Charset": "UTF-8",
-                    "Data": f"""
-                    <html>
-                        <body>
-                        <h1>Thanks for subscribing to Robonews!</h1>
-                        <hr>
-                        <p>Click <a href="{get_subscribe_link(email)}">here</a> to confirm your email!</p>
-                        <br></br>
-                        <a href="https://github.com/sweetkane/robonews">GitHub</a>
-                        </body>
-                    </html>
-                    """,
-                },
-            },
-            "Subject": {
-                "Charset": "UTF-8",
-                "Data": "Robonews Email Confirmation",
-            },
-        },
-        Source=sender,
-    )
+    html = f"""
+        <html>
+            <body>
+            <h1>Thanks for subscribing to Robonews! 🤖</h1>
+            <hr>
+            <p>Click <a href="{get_subscribe_link(email)}">here</a> to confirm your email!</p>
+            <br></br>
+            <a href="https://github.com/sweetkane/robonews">GitHub</a>
+            </body>
+        </html>
+        """
+
+    send_email(sender, email, "Robonews Email Confirmation", html)

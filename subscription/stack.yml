@@ -20,6 +20,9 @@ Parameters:
   Tag:
     Type: String
     Description: Random UUID tag to force update to lambda code
+  MailgunApiKey:
+    Type: String
+    Description: API key for mailgun email service
 
 Resources:
   UserEmailsTable:
@@ -100,6 +103,7 @@ Resources:
         S3Key: !Sub "robonews/subscription/${ConfirmLambdaName}-${Tag}.zip"
       Environment:
         Variables:
+          MAILGUN_API_KEY: !Ref MailgunApiKey
           KMS_KEY_ID: !Ref EncryptionKeyId
           SUBSCRIBE_LAMBDA_URL: !GetAtt SubscribeLambdaUrl.FunctionUrl
 

@@ -1,5 +1,6 @@
 import base64
 import os
+import urllib
 from datetime import date
 
 import boto3
@@ -42,34 +43,30 @@ class EmailOutput(IOutput):
         except Exception as e:
             raise e
 
-    def _send_email(self, sender, recipient, subject, body_html):
-        # Create a new SES resource and specify a region.
+    def _send_email(self, sender, recipient, subject, html):
+        url = "https://api.mailgun.net/v3/kanesweet.com/messages"
 
-        # Try to send the email.
+        data = urllib.parse.urlencode(
+            {
+                "from": f"RoboNews <{sender}>",
+                "to": recipient,
+                "subject": subject,
+                "html": html,
+            }
+        ).encode()
 
-        # Todo add an unsubscribe link with encrypted email
+        api_key = os.environ["MAILGUN_API_KEY"]
+        auth = f"api:{api_key}".encode("ascii")
+        auth_header = base64.b64encode(auth).decode("ascii")
+
+        request = urllib.request.Request(url, data=data)
+        request.add_header("Authorization", f"Basic {auth_header}")
+
         try:
-            response = self.ses_client.send_email(
-                Destination={"ToAddresses": [recipient]},
-                Message={
-                    "Body": {
-                        "Html": {
-                            "Charset": "UTF-8",
-                            "Data": body_html,
-                        },
-                    },
-                    "Subject": {
-                        "Charset": "UTF-8",
-                        "Data": subject,
-                    },
-                },
-                Source=sender,
-            )
-        except Exception as e:
-            print(e.response["Error"]["Message"])
-            raise e
-        else:
-            print(f"Email sent to {recipient}!"),
+            with urllib.request.urlopen(request) as response:
+                return response.read().decode()
+        except urllib.error.HTTPError as e:
+            raise Exception(f"Error: {e.read().decode()}")
 
     def _get_body(self, content: str, recipient: str):
         html = f"""
