@@ -18,7 +18,8 @@ def get_and_decrypt_email(event):
     if not encrypted_email:
         raise Exception("No cypher text found in the event...")
 
-    encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email + "=")
+    padding = "=" * (4 - len(encrypted_email) % 4)
+    encrypted_token_bytes = base64.urlsafe_b64decode(encrypted_email + padding)
     print("encrypted_token_bytes = ", encrypted_token_bytes)
     decrypt_response = kms_client.decrypt(CiphertextBlob=encrypted_token_bytes)
     print("decrypt_response = ", decrypt_response)

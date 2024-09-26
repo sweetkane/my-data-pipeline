@@ -32,6 +32,7 @@ def send_email(sender, recipient, subject, html):
 
     try:
         with urllib.request.urlopen(request) as response:
+            print(f"Sent email to: {recipient}")
             return response.read().decode()
     except urllib.error.HTTPError as e:
         raise Exception(f"Error: {e.read().decode()}")
@@ -45,9 +46,11 @@ def get_subscribe_link(recipient: str) -> str:
     ciphertext = response["CiphertextBlob"]
 
     base64_encoded_ciphertext = base64.urlsafe_b64encode(ciphertext)
-    utf_cypher = base64_encoded_ciphertext.decode("utf-8")[:-1]
+    utf_cypher = base64_encoded_ciphertext.decode("utf-8").rstrip("=")
 
-    return subscribe_lambda_url + "?user=" + utf_cypher
+    link = subscribe_lambda_url + "?user=" + utf_cypher
+    print(f"Created: {link}")
+    return link
 
 
 def lambda_handler(event, context):
