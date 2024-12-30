@@ -29,7 +29,7 @@ class EmailOutput(IOutput):
                 sender="robonews@kanesweet.com",
                 recipient=recipient,
                 subject=self.subject,
-                body_html=self._get_body(content, recipient),
+                html=self._get_body(content, recipient),
             )
 
     def _get_recipients(self):
